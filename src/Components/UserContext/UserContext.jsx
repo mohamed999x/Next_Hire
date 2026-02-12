@@ -82,30 +82,24 @@ export function UserContextProvider({ children }) {
 
         // Default Mock Jobs
         const defaultJobs = [
-          {
-            jobId: '1',
-            title: 'Frontend Developer',
-            company: 'Tech Corp',
-            location: 'Remote',
-            type: 'Full-time',
-            description: 'We are looking for a skilled Frontend Developer to join our team. Must have experience with React and modern CSS.'
-          },
-          {
-            jobId: '2',
-            title: 'Backend Engineer',
-            company: 'Data Systems',
-            location: 'New York',
-            type: 'Part-time',
-            description: 'Seeking a Backend Engineer proficient in Node.js and database management.'
-          },
-          {
-            jobId: '3',
-            title: 'UI/UX Designer',
-            company: 'Creative Agency',
-            location: 'London',
-            type: 'Contract',
-            description: 'Creative UI/UX Designer needed for a short-term project. Portfolio required.'
-          }
+          { jobId: '1', title: 'Frontend Developer', company: 'Tech Corp', location: 'Remote', type: 'Full-time', salaryRange: '$80k - $120k', description: 'Experienced React developer needed for a high-growth startup.' },
+          { jobId: '2', title: 'Backend Engineer', company: 'Data Systems', location: 'New York', type: 'Full-time', salaryRange: '$90k - $140k', description: 'Node.js and PostgreSQL expert for scalable backend architecture.' },
+          { jobId: '3', title: 'UI/UX Designer', company: 'Creative Agency', location: 'London', type: 'Contract', salaryRange: '$60/hr', description: 'Figma pro needed for luxury brand redesign.' },
+          { jobId: '4', title: 'AI Research Scientist', company: 'Future Mind', location: 'San Francisco', type: 'Full-time', salaryRange: '$160k - $220k', description: 'PhD in ML required for cutting-edge LLM research.' },
+          { jobId: '5', title: 'Fullstack Developer', company: 'WebWorks', location: 'Remote', type: 'Full-time', salaryRange: '$100k - $150k', description: 'MERN stack expert to build end-to-end applications.' },
+          { jobId: '6', title: 'DevOps Engineer', company: 'CloudScale', location: 'Austin', type: 'Full-time', salaryRange: '$120k - $170k', description: 'AWS, Docker, and Kubernetes specialist for infrastructure automation.' },
+          { jobId: '7', title: 'Cyber Security Analyst', company: 'SafeGuard', location: 'Chicago', type: 'Full-time', salaryRange: '$110k - $160k', description: 'Protecting enterprise assets from emerging threats.' },
+          { jobId: '8', title: 'Project Manager', company: 'BuildIt', location: 'Toronto', type: 'Full-time', salaryRange: '$90k - $130k', description: 'Agile leader for complex construction projects.' },
+          { jobId: '9', title: 'Civil Engineer', company: 'Urban Design', location: 'Dubai', type: 'Full-time', salaryRange: '$85k - $140k', description: 'Designing the next generation of smart cities.' },
+          { jobId: '10', title: 'Mechanical Engineer', company: 'AutoTech', location: 'Berlin', type: 'Full-time', salaryRange: '€70k - €100k', description: 'EV battery systems engineering.' },
+          { jobId: '11', title: 'Pediatric Doctor', company: 'HealthLink', location: 'Boston', type: 'Full-time', salaryRange: '$200k - $250k', description: 'Caring for the next generation.' },
+          { jobId: '12', title: 'Registered Nurse', company: 'City Hospital', location: 'Seattle', type: 'Full-time', salaryRange: '$80k - $110k', description: 'Dedicated healthcare professional for ICU.' },
+          { jobId: '13', title: 'Data Scientist', company: 'InsightAI', location: 'Austin', type: 'Full-time', salaryRange: '$130k - $180k', description: 'Analyzing complex datasets for business intelligence.' },
+          { jobId: '14', title: 'Mobile App Developer', company: 'Appify', location: 'Remote', type: 'Full-time', salaryRange: '$95k - $145k', description: 'Flutter or React Native expert for cross-platform apps.' },
+          { jobId: '15', title: 'Digital Marketing Specialist', company: 'GrowthHub', location: 'Los Angeles', type: 'Full-time', salaryRange: '$70k - $110k', description: 'SEO/SEM and Social Media strategy lead.' },
+          { jobId: '16', title: 'Blockchain Developer', company: 'CryptoCore', location: 'Remote', type: 'Full-time', salaryRange: '$140k - $200k', description: 'Smart contracts and decentralized finance.' },
+          { jobId: '17', title: 'Architect', company: 'Skyline Partners', location: 'Miami', type: 'Full-time', salaryRange: '$90k - $150k', description: 'Designing sustainable high-rise projects.' },
+          { jobId: '18', title: 'Network Engineer', company: 'GlobalNet', location: 'Paris', type: 'Full-time', salaryRange: '€65k - €95k', description: 'Managing high-performance network infrastructures.' }
         ];
 
         // Load posted jobs from localStorage

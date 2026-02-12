@@ -19,6 +19,11 @@ import EmployeePage from './Components/EmployeePage/EmployeePage'
 import JobDetails from './Components/JobDetails/JobDetails'
 import MockInterview from './Components/MockInterview/MockInterview'
 import CareerRoadmap from './Components/CareerRoadmap/CareerRoadmap'
+import PersonalBrandingAssistant from './Components/PersonalBrandingAssistant/PersonalBrandingAssistant'
+import ResumeMatcher from './Components/ResumeMatcher/ResumeMatcher'
+import CoverLetterArchitect from './Components/CoverLetterArchitect/CoverLetterArchitect'
+import PivotPredictor from './Components/PivotPredictor/PivotPredictor'
+import OfferWeightCalculator from './Components/OfferWeightCalculator/OfferWeightCalculator'
 
 function App() {
   const { userData } = useContext(TheUserContext);
@@ -34,13 +39,17 @@ function App() {
         <Route path='/registeremployer' element={< RegisterCompany />} />
         <Route path='/companypage' element={< CompanyPage />} />
         <Route path='/employeepage' element={< EmployeePage />} />
-        <Route path='/internetspeed' element={< InternetSpeedChecker />} />
+        <Route path='/internetspeed' element={<ProtectedRoute userData={userData}><InternetSpeedChecker /></ProtectedRoute>} />
         <Route path='/industry' element={<Industry />} />
         <Route path='/cvbuilder' element={<ProtectedRoute userData={userData}><CVBuilder /></ProtectedRoute>} />
         <Route path='/mock-interview' element={<ProtectedRoute userData={userData}><MockInterview /></ProtectedRoute>} />
         <Route path='/career-roadmap' element={<ProtectedRoute userData={userData}><CareerRoadmap /></ProtectedRoute>} />
+        <Route path='/branding-assistant' element={<ProtectedRoute userData={userData}><PersonalBrandingAssistant /></ProtectedRoute>} />
+        <Route path='/resume-matcher' element={<ProtectedRoute userData={userData}><ResumeMatcher /></ProtectedRoute>} />
+        <Route path='/cover-letter' element={<ProtectedRoute userData={userData}><CoverLetterArchitect /></ProtectedRoute>} />
+        <Route path='/pivot-predictor' element={<ProtectedRoute userData={userData}><PivotPredictor /></ProtectedRoute>} />
+        <Route path='/offer-calculator' element={<ProtectedRoute userData={userData}><OfferWeightCalculator /></ProtectedRoute>} />
         <Route path='/*' element={<NotFound />} />
-        <Route path='/companypage' element={<CompanyPage />} />
         <Route path='/jobdetails' element={<ProtectedRoute userData={userData}><JobDetails /></ProtectedRoute>} />
       </Routes>
     </>

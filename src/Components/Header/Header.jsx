@@ -14,13 +14,13 @@ export default function Header() {
     } = useContext(TheUserContext);
     return (
         <>
-            <nav className="navbar navbar-expand-lg ">
-                <div className="container-fluid d-flex ">
-                    <a className="navbar-brand" href="#">
+            <nav className="navbar navbar-expand-lg">
+                <div className="container-fluid">
+                    <Link className="navbar-brand" to="/">
                         <div className="logo image">
                             <img src={Logo} className='w-100 rounded' alt="Jobify" />
                         </div>
-                    </a>
+                    </Link>
                     <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                         <span className="navbar-toggler-icon"></span>
                     </button>
@@ -58,14 +58,22 @@ export default function Header() {
                                         </ul>
                                     </li>
 
-                                    <li className="nav-item">
-                                        <NavLink className={({ isActive }) => isActive ? "active-link nav-link" : "nav-link"} to={"/cvbuilder"}>CV creation</NavLink>
-                                    </li>
-                                    <li className="nav-item">
-                                        <NavLink className={({ isActive }) => isActive ? "active-link nav-link" : "nav-link"} to={"/mock-interview"}>Interview Practice</NavLink>
-                                    </li>
-                                    <li className="nav-item">
-                                        <NavLink className={({ isActive }) => isActive ? "active-link nav-link" : "nav-link"} to={"/career-roadmap"}>Career Roadmap</NavLink>
+                                    <li className="nav-item dropdown">
+                                        <NavLink className={({ isActive }) => isActive ? "active-link nav-link dropdown-toggle" : "nav-link dropdown-toggle"} to="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                            Services
+                                        </NavLink>
+                                        <ul className="dropdown-menu">
+                                            <li><Link className='dropdown-item' to={"/cvbuilder"}>📄 CV Creation</Link></li>
+                                            <li><Link className='dropdown-item' to={"/mock-interview"}>🎙️ Interview Practice</Link></li>
+                                            <li><Link className='dropdown-item' to={"/career-roadmap"}>🗺️ Career Roadmap</Link></li>
+                                            <li><Link className='dropdown-item' to={"/branding-assistant"}>🪄 Branding Assistant</Link></li>
+                                            <li><Link className='dropdown-item' to={"/resume-matcher"}>📈 Resume Scorer</Link></li>
+                                            <li><Link className='dropdown-item' to={"/cover-letter"}>✍️ Cover Letter Architect</Link></li>
+                                            <li><Link className='dropdown-item' to={"/pivot-predictor"}>🔮 Pivot Predictor</Link></li>
+                                            <li><Link className='dropdown-item' to={"/offer-calculator"}>⚖️ Offer Calculator</Link></li>
+                                            <li><hr className="dropdown-divider" /></li>
+                                            <li><Link className='dropdown-item' to={"/internetspeed"}>⚡ Internet Speed</Link></li>
+                                        </ul>
                                     </li>
                                 </>
                             )}

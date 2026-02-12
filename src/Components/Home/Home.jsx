@@ -57,7 +57,7 @@ export default function Home() {
             Find your suitable job in the most popular jobs that are trending
             now{" "}
           </p>
-          <Trendings number={12} search={searchQuery} />
+          <Trendings number={24} search={searchQuery} />
         </div>
 
         <div className="hero d-flex justify-content-center align-items-center">

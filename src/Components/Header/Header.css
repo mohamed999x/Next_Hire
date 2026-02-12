@@ -1,55 +1,150 @@
 nav {
-    border-top-right-radius: 20px;
-    border-top-left-radius: 20px;
-    background-color: #f2f6ff !important;
-    margin: 10px 10px 0 10px; /* نفس margin بتاع .hero */
-    border-bottom: 2px solid #83c0ec68;
+    position: sticky;
+    top: 20px;
+    z-index: 1000;
+    max-width: 1300px;
+    margin: 10px auto !important;
+    background: rgba(255, 255, 255, 0.7) !important;
+    backdrop-filter: blur(15px);
+    -webkit-backdrop-filter: blur(15px);
+    border-radius: 50px;
+    border: 1px solid rgba(255, 255, 255, 0.4);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.08);
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    padding: 8px 20px;
+}
+
+nav:hover {
+    background: rgba(255, 255, 255, 0.85) !important;
+    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.12);
 }
 
 .logo {
-    width: 60px;
-    height: 60px;
-    transition: all 0.4s;
+    width: 50px;
+    height: 50px;
+    transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
 }
+
 .logo:hover {
-    transform: scale3d(1.1,1.1,1.1) rotate(9deg);
+    transform: scale(1.15) rotate(12deg);
 }
+
 nav .navbar-nav li a {
-    transition: var(--main-transition);
-    cursor: pointer;
+    font-weight: 500;
+    color: #444 !important;
+    padding: 10px 18px !important;
+    transition: all 0.3s ease;
+    border-radius: 30px;
+    position: relative;
+    margin: 0 2px;
+}
+
+nav .navbar-nav li a:hover {
+    background: rgba(13, 110, 253, 0.08) !important;
+    color: var(--special-color, #0d6efd) !important;
+    transform: translateY(-2px);
+}
+
+nav .navbar-nav li a.active-link {
+    background: var(--special-color, #0d6efd) !important;
+    color: #ffffff !important;
+    box-shadow: 0 4px 15px rgba(13, 110, 253, 0.3);
+}
+
+/* Dropdown Menu Styling */
+.dropdown-menu {
+    background: rgba(255, 255, 255, 0.9) !important;
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border-radius: 15px !important;
+    border: 1px solid rgba(255, 255, 255, 0.5) !important;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1) !important;
+    padding: 10px !important;
+    margin-top: 15px !important;
+    animation: slideDown 0.3s ease-out;
+}
+
+.dropdown-item {
     border-radius: 10px;
+    padding: 8px 15px !important;
+    transition: all 0.2s ease;
+    font-weight: 500;
+    color: #444 !important;
 }
-nav .navbar-nav li a:hover  {
-    background-color: var(--special-color) !important;
-    color: #fff !important;
+
+.dropdown-item:hover {
+    background-color: rgba(13, 110, 253, 0.1) !important;
+    color: var(--special-color, #0d6efd) !important;
+    transform: translateX(5px);
 }
+
+.dropdown-divider {
+    border-top: 1px solid rgba(0, 0, 0, 0.05) !important;
+    margin: 8px 0 !important;
+}
+
+@keyframes slideDown {
+    from {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+#thelist {
+    background: rgba(255, 255, 255, 0.5);
+    padding: 5px 15px !important;
+    border-radius: 30px;
+    border: 1px solid rgba(255, 255, 255, 0.3);
+}
+
 #thelist li {
-    width: 35px;
-    height: 35px;
+    width: 38px;
+    height: 38px;
     border-radius: 50%;
-    /* background-color: var(--special-color); */
     color: var(--special-color);
     display: flex;
     justify-content: center;
     align-items: center;
     cursor: pointer;
-    transition: var(--main-transition);
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
-#thelist li i, #thelist li .image {
-    font-size: 20px;
-}
+
 #thelist li:hover {
-    transform: scale3d(1.2,1.2,1.2) rotate(18deg);
+    background: white;
+    transform: scale(1.1) translateY(-3px);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
 }
-i, .the-nav {
-    color: var(--special-color); 
+
+.navbar-toggler {
+    border: none;
+    background: rgba(0, 0, 0, 0.05);
+    border-radius: 12px;
+    padding: 8px;
 }
+
+.navbar-toggler:focus {
+    box-shadow: none;
+}
+
 @media(max-width:992px) {
-    #thelist {
-        flex-direction: column;
-        align-items: flex-start !important;
+    nav {
+        border-radius: 20px;
+        margin: 10px !important;
     }
-    .navbar-nav .nav-link {
-        padding-left: 5px;
+
+    #thelist {
+        flex-direction: row !important;
+        justify-content: flex-start !important;
+        margin-top: 15px;
+        width: fit-content;
+    }
+
+    .navbar-collapse {
+        padding-top: 15px;
     }
 }

@@ -167,6 +167,83 @@ export default function About() {
                   </p>
                 </div>
               </div>
+              <div className="property">
+                <i className="fa-solid fa-wand-magic-sparkles"></i>
+                <div className="inf">
+                  <h3>Branding Assistant</h3>
+                  <p>
+                    <Link to="/branding-assistant" style={{ textDecoration: 'none', color: '#777' }}>
+                      Optimize your professional bio and LinkedIn headline with AI
+                    </Link>
+                  </p>
+                </div>
+              </div>
+              <div className="property">
+                <i className="fa-solid fa-file-circle-check"></i>
+                <div className="inf">
+                  <h3>Resume Scorer</h3>
+                  <p>
+                    <Link to="/resume-matcher" style={{ textDecoration: 'none', color: '#777' }}>
+                      Match your resume against job descriptions to pass ATS filters
+                    </Link>
+                  </p>
+                </div>
+              </div>
+              <div className="property">
+                <i className="fa-solid fa-graduation-cap"></i>
+                <div className="inf">
+                  <h3>Skill-Up Connector</h3>
+                  <p>
+                    <Link to="/resume-matcher" style={{ textDecoration: 'none', color: '#777' }}>
+                      Get instant learning resources to bridge your skill gaps
+                    </Link>
+                  </p>
+                </div>
+              </div>
+              <div className="property">
+                <i className="fa-solid fa-hammer"></i>
+                <div className="inf">
+                  <h3>Portfolio Generator</h3>
+                  <p>
+                    <Link to="/resume-matcher" style={{ textDecoration: 'none', color: '#777' }}>
+                      Get customized project ideas to prove your "Missing Skills"
+                    </Link>
+                  </p>
+                </div>
+              </div>
+              <div className="property">
+                <i className="fa-solid fa-file-signature"></i>
+                <div className="inf">
+                  <h3>Cover Letter Architect</h3>
+                  <p>
+                    <Link to="/cover-letter" style={{ textDecoration: 'none', color: '#777' }}>
+                      Generate high-converting, tailored cover letters instantly
+                    </Link>
+                  </p>
+                </div>
+              </div>
+              <div className="property">
+                <i className="fa-solid fa-crystal-ball text-info"></i>
+                <div className="inf">
+                  <h3>Pivot Predictor</h3>
+                  <p>
+                    <Link to="/pivot-predictor" style={{ textDecoration: 'none', color: '#777' }}>
+                      AI-driven career risk analysis and strategic transition roadmap
+                    </Link>
+                  </p>
+                </div>
+              </div>
+              <div className="property">
+                <i className="fa-solid fa-scale-balanced text-success"></i>
+                <div className="inf">
+                  <h3>Offer Calculator</h3>
+                  <p>
+                    <Link to="/offer-calculator" style={{ textDecoration: 'none', color: '#777' }}>
+                      Analyze and compare multiple job offers for "Total Life Value"
+                    </Link>
+                  </p>
+                </div>
+              </div>
             </div>
           </div>
           <Footer />

@@ -1,0 +1,118 @@
+.offer-calc-container {
+    padding-top: 100px;
+    padding-bottom: 60px;
+    background: #f8fafc;
+    min-height: 100vh;
+}
+
+.calc-card {
+    background: white;
+    border-radius: 24px;
+    padding: 35px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+    border: 1px solid #e2e8f0;
+}
+
+.offer-header {
+    padding: 15px;
+    border-radius: 16px;
+    margin-bottom: 25px;
+    text-align: center;
+    font-weight: 700;
+}
+
+.header-a {
+    background: #eff6ff;
+    color: #1e40af;
+    border: 1px solid #dbeafe;
+}
+
+.header-b {
+    background: #fef2f2;
+    color: #991b1b;
+    border: 1px solid #fee2e2;
+}
+
+.input-group-label {
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: #64748b;
+    margin-bottom: 8px;
+    display: block;
+}
+
+.calc-input {
+    border-radius: 12px;
+    border: 1px solid #e2e8f0;
+    padding: 10px 15px;
+    font-size: 1rem;
+    transition: all 0.3s ease;
+}
+
+.calc-input:focus {
+    border-color: #3b82f6;
+    box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.1);
+    outline: none;
+}
+
+.comparison-result {
+    background: #1e293b;
+    color: white;
+    border-radius: 20px;
+    padding: 30px;
+    margin-top: 40px;
+}
+
+.score-bar-container {
+    height: 12px;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 50px;
+    overflow: hidden;
+    margin: 15px 0;
+}
+
+.score-bar {
+    height: 100%;
+    transition: width 1s ease-in-out;
+}
+
+.bar-a {
+    background: #3b82f6;
+}
+
+.bar-b {
+    background: #ef4444;
+}
+
+.verdict-box {
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 16px;
+    padding: 20px;
+    border-left: 4px solid #3b82f6;
+}
+
+.winner-badge {
+    background: #10b981;
+    color: white;
+    padding: 5px 15px;
+    border-radius: 50px;
+    font-size: 0.8rem;
+    font-weight: 700;
+    text-transform: uppercase;
+}
+
+.btn-analyze {
+    background: #1e293b;
+    color: white;
+    border: none;
+    padding: 15px;
+    border-radius: 14px;
+    font-weight: 700;
+    width: 100%;
+    transition: all 0.3s ease;
+}
+
+.btn-analyze:hover {
+    background: #334155;
+    transform: translateY(-2px);
+}
