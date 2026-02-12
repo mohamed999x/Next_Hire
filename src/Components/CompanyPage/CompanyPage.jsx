@@ -27,17 +27,31 @@ export default function CompanyPage({ userData }) {
         }
 
         try {
-            const response = await axios.post(
-                `https://localhost:7209/api/Companies/${companyId}/jobs`,
-                job,
-                {
-                    headers: {
-                        'Content-Type': 'application/json'
-                    }
-                }
-            );
-            console.log('Job posted:', response.data);
-            alert("Job posted successfully!");
+            // MOCK BACKEND
+            await new Promise(resolve => setTimeout(resolve, 500));
+
+            const newJob = {
+                jobId: Date.now().toString(),
+                companyId: companyId,
+                title: job.title,
+                description: job.description,
+                location: job.location,
+                type: 'Full-time', // Defaulting for now
+                salaryRange: job.salaryRange,
+                postedDate: new Date().toISOString(),
+                company: "My Company (Mock)" // In a real app key this off companyId
+            };
+
+            const existingJobs = JSON.parse(localStorage.getItem('jobs') || '[]');
+            existingJobs.push(newJob);
+            localStorage.setItem('jobs', JSON.stringify(existingJobs));
+
+            console.log('Job posted (Mock):', newJob);
+            alert("Job posted successfully (Mocked)!");
+
+            // Clear form
+            setJob({ title: '', description: '', location: '', salaryRange: '' });
+
         } catch (error) {
             console.error('Error posting job:', error);
             alert("Failed to post job.");

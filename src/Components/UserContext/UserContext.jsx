@@ -15,16 +15,16 @@ export function UserContextProvider({ children }) {
   const [selectedCategory, setSelectedCategory] = useState(null); // ✅ تمت الإضافة هنا
   const [likedJobs, setLikedJobs] = useState([]);
 
-const toggleLikeJob = (job) => {
-  setLikedJobs((prev) => {
-    const alreadyLiked = prev.find((j) => j.jobId === job.jobId);
-    if (alreadyLiked) {
-      return prev.filter((j) => j.jobId !== job.jobId);
-    } else {
-      return [...prev, job];
-    }
-  });
-};
+  const toggleLikeJob = (job) => {
+    setLikedJobs((prev) => {
+      const alreadyLiked = prev.find((j) => j.jobId === job.jobId);
+      if (alreadyLiked) {
+        return prev.filter((j) => j.jobId !== job.jobId);
+      } else {
+        return [...prev, job];
+      }
+    });
+  };
 
   const handleSearch = (e) => {
     e.preventDefault();
@@ -56,17 +56,65 @@ const toggleLikeJob = (job) => {
     let encodedToken = localStorage.getItem("token");
     let company_Id = localStorage.getItem("companyId");
     setCompanyId(company_Id);
-    let decodedToken = jwtDecode(encodedToken);
-    setUserData(decodedToken);
-    console.log(userData);
-    console.log(companyId);
+
+    if (!encodedToken) return;
+
+    try {
+      let decodedToken = jwtDecode(encodedToken);
+      setUserData(decodedToken);
+      console.log(userData);
+      console.log(companyId);
+    } catch (error) {
+      console.warn("Invalid Token (Mock Mode?):", error);
+      // Fallback for Mock Mode
+      if (encodedToken.startsWith("mock-jwt-token")) {
+        const mockUser = JSON.parse(localStorage.getItem('user'));
+        setUserData(mockUser || { name: 'Mock User', role: 'Employee' });
+      }
+    }
   }
 
   useEffect(() => {
     async function fetchJobs() {
       try {
-        const response = await axios.get("https://localhost:7209/api/Job");
-        setJobs(response.data);
+        // MOCK BACKEND
+        await new Promise(resolve => setTimeout(resolve, 500));
+
+        // Default Mock Jobs
+        const defaultJobs = [
+          {
+            jobId: '1',
+            title: 'Frontend Developer',
+            company: 'Tech Corp',
+            location: 'Remote',
+            type: 'Full-time',
+            description: 'We are looking for a skilled Frontend Developer to join our team. Must have experience with React and modern CSS.'
+          },
+          {
+            jobId: '2',
+            title: 'Backend Engineer',
+            company: 'Data Systems',
+            location: 'New York',
+            type: 'Part-time',
+            description: 'Seeking a Backend Engineer proficient in Node.js and database management.'
+          },
+          {
+            jobId: '3',
+            title: 'UI/UX Designer',
+            company: 'Creative Agency',
+            location: 'London',
+            type: 'Contract',
+            description: 'Creative UI/UX Designer needed for a short-term project. Portfolio required.'
+          }
+        ];
+
+        // Load posted jobs from localStorage
+        const postedJobs = JSON.parse(localStorage.getItem('jobs') || '[]');
+
+        // Combine them
+        const allJobs = [...defaultJobs, ...postedJobs];
+
+        setJobs(allJobs);
       } catch (error) {
         setJobsError("Failed to fetch jobs");
         console.error(error);

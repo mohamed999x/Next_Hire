@@ -1,4 +1,4 @@
-import React, { useState,  } from 'react';
+import React, { useState, } from 'react';
 import Header from '../Header/Header';
 import Footer from '../Footer/Footer';
 import "../Login/Login.css";
@@ -26,13 +26,39 @@ export default function RegisterCompany() {
         formData.append("IndustryId", values.IndustryId);
 
         try {
-            const { data } = await axios.post(
-                `https://localhost:7209/api/Companies/Register`,
-                formData,
-                { headers: { "Content-Type": "multipart/form-data" } }
-            );
+            // MOCK BACKEND
+            await new Promise(resolve => setTimeout(resolve, 1000));
 
-            setMessageErro(`${data}`);
+            const companies = JSON.parse(localStorage.getItem('companies') || '[]');
+            if (companies.some(c => c.email === values.Email)) {
+                throw { response: { data: "Email already registered", status: 409 } };
+            }
+
+            const newCompany = {
+                companyId: Date.now().toString(),
+                name: values.Name,
+                email: values.Email,
+                password: values.Password,
+                industryId: values.IndustryId,
+                role: 'Company'
+            };
+
+            companies.push(newCompany);
+            localStorage.setItem('companies', JSON.stringify(companies));
+
+            // Also add to generic users for login
+            const users = JSON.parse(localStorage.getItem('users') || '[]');
+            users.push({
+                id: newCompany.companyId,
+                email: values.Email,
+                password: values.Password,
+                role: 'Company'
+            });
+            localStorage.setItem('users', JSON.stringify(users));
+
+
+            const data = { companyId: newCompany.companyId };
+            setMessageErro("Company registered successfully (Mocked).");
             console.log("API response:", data);
 
             if (data.companyId) {
@@ -41,7 +67,11 @@ export default function RegisterCompany() {
             }
         } catch (error) {
             console.error("Server returned:", error);
-            setMessageErro("Error: Something went wrong during registration.");
+            if (error.response) {
+                setMessageErro(`Error: ${error.response.data}`);
+            } else {
+                setMessageErro("Error: Something went wrong during registration.");
+            }
         } finally {
             setIsLoading(false);
         }
@@ -70,7 +100,7 @@ export default function RegisterCompany() {
 
     return (
         <div className="container-fluid p-0">
-            <Header/>
+            <Header />
             <div className="container-fluid">
                 <div className="hero d-flex justify-content-center align-items-center gap-4">
                     <div className="image">

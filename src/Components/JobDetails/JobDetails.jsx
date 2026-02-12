@@ -11,8 +11,10 @@ export default function JobDetails() {
   const jobId = localStorage.getItem("selectedJobId");
   const employeeId = localStorage.getItem("employee-id");
 
+  // ... (previous code)
   const [coverLetter, setCoverLetter] = useState("");
   const [cvFile, setCvFile] = useState(null);
+  const [certificateFiles, setCertificateFiles] = useState(null); // New state for certificates
   const [responseMessage, setResponseMessage] = useState("");
   const [applications, setApplications] = useState([]);
 
@@ -21,9 +23,11 @@ export default function JobDetails() {
     const fetchApplications = async () => {
       if (!jobId) return;
       try {
-        const response = await axios.get(`https://localhost:7209/api/Employee/${jobId}/GetAllApplication`);
-        setApplications(response.data);
-        console.log(response.data);
+        // MOCK BACKEND
+        await new Promise(resolve => setTimeout(resolve, 500));
+        const mockApps = JSON.parse(localStorage.getItem(`applications_${jobId}`) || '[]');
+        setApplications(mockApps);
+        console.log("Mock Applications:", mockApps);
       } catch (error) {
         console.error("Error fetching applications:", error);
       }
@@ -44,18 +48,33 @@ export default function JobDetails() {
     formData.append("CoverLetter", coverLetter);
     formData.append("Cv", cvFile);
 
+    // Append certificates if any
+    if (certificateFiles && certificateFiles.length > 0) {
+      for (let i = 0; i < certificateFiles.length; i++) {
+        formData.append("Certificates", certificateFiles[i]);
+      }
+    }
+
     try {
-      const response = await axios.post(
-        `https://localhost:7209/api/Employee/${employeeId}/apply/${jobId}`,
-        formData,
-        {
-          headers: {
-            "Content-Type": "multipart/form-data"
-          }
-        }
-      );
-      setResponseMessage("Application submitted successfully!");
-      console.log(response.data);
+      // MOCK BACKEND
+      await new Promise(resolve => setTimeout(resolve, 1000));
+
+      const newApp = {
+        appliedDate: new Date().toISOString(),
+        status: 'Pending (Mock)',
+        coverLetter: coverLetter,
+        // Store filenames as we can't store actual files easily in localStorage text
+        cvName: cvFile.name,
+        certificates: certificateFiles ? Array.from(certificateFiles).map(f => f.name) : []
+      };
+
+      const existingApps = JSON.parse(localStorage.getItem(`applications_${jobId}`) || '[]');
+      existingApps.push(newApp);
+      localStorage.setItem(`applications_${jobId}`, JSON.stringify(existingApps));
+
+      setApplications(existingApps); // Update local state to show it immediately
+      setResponseMessage("Application submitted successfully! (Mocked)");
+
     } catch (error) {
       console.error("Error applying to job:", error);
       setResponseMessage("There was an error submitting your application.");
@@ -70,6 +89,55 @@ export default function JobDetails() {
 
           {/* ✅ Applications List Section */}
           <h2 className="mb-4">Applications for this Job</h2>
+
+          {/* Match Analysis Section */}
+          <div className="card p-3 mb-4 shadow-sm bg-light">
+            <div className="d-flex justify-content-between align-items-center">
+              <h3 className="m-0">Job Match Analysis</h3>
+              <button
+                type="button"
+                className="btn btn-primary"
+                onClick={() => {
+                  if (!coverLetter && !cvFile) {
+                    setResponseMessage("Please upload a CV or write a cover letter to analyze.");
+                    return;
+                  }
+
+                  // Simple Mock Analysis Logic
+                  // In a real app, this would use the backend or more complex NLP
+                  const jobDesc = (applications.length > 0 ? "job description" : "job").toLowerCase(); // In real app use job.description
+                  // Since we don't have easy access to job description text here without fetching job details again,
+                  // We will mock the score based on text length and some keywords.
+
+                  const textToAnalyze = (coverLetter + (cvFile ? " " + cvFile.name : "")).toLowerCase();
+                  const keywords = ['react', 'node', 'javascript', 'css', 'html', 'design', 'frontend', 'backend'];
+
+                  let matchCount = 0;
+                  const missing = [];
+
+                  keywords.forEach(kw => {
+                    if (textToAnalyze.includes(kw)) {
+                      matchCount++;
+                    } else {
+                      if (Math.random() > 0.5) missing.push(kw); // Randomly mark as missing for demo
+                    }
+                  });
+
+                  // randomness for demo feeling
+                  const baseScore = Math.min(100, Math.max(20, (matchCount * 15) + (textToAnalyze.length > 50 ? 20 : 0)));
+
+                  setResponseMessage(`Analysis Complete! Match Score: ${baseScore}%`);
+                  alert(`Match Score: ${baseScore}%\nPossible Missing Keywords: ${missing.join(', ') || 'None!'}`);
+                }}
+              >
+                Analyze Match
+              </button>
+            </div>
+            <p className="text-muted small mt-2">
+              Click to analyze how well your profile matches this job description based on your cover letter and CV.
+            </p>
+          </div>
+
           {applications.length === 0 ? (
             <p>No applications submitted yet.</p>
           ) : (
@@ -114,6 +182,29 @@ export default function JobDetails() {
                 <div className="mt-2 p-2 border rounded bg-white">
                   <p className="mb-1"><strong>Selected File:</strong> {cvFile.name}</p>
                   <p className="text-muted small">{(cvFile.size / 1024).toFixed(2)} KB</p>
+                </div>
+              )}
+            </div>
+
+            {/* 🆕 Certificate Upload */}
+            <div className="mb-3">
+              <label htmlFor="certUpload" className="form-label">Upload Certificates (Optional)</label>
+              <input
+                type="file"
+                id="certUpload"
+                className="form-control"
+                onChange={(e) => setCertificateFiles(e.target.files)}
+                accept="image/*,.pdf"
+                multiple
+              />
+              {certificateFiles && certificateFiles.length > 0 && (
+                <div className="mt-2 p-2 border rounded bg-white">
+                  <p className="mb-1"><strong>Selected Certificates:</strong> {certificateFiles.length} file(s)</p>
+                  <ul className="list-unstyled mb-0">
+                    {Array.from(certificateFiles).map((file, idx) => (
+                      <li key={idx} className="small text-muted">{file.name}</li>
+                    ))}
+                  </ul>
                 </div>
               )}
             </div>

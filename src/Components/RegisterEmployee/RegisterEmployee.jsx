@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import Header from '../Header/Header';
 import Footer from '../Footer/Footer';
 import "../Login/Login.css";
@@ -8,22 +8,115 @@ import { Link, useNavigate } from 'react-router-dom';
 import { useFormik } from 'formik';
 import * as Yup from "yup";
 import axios from 'axios';
+import Webcam from 'react-webcam';
+import * as faceapi from 'face-api.js';
+
 export default function RegisterEmployee() {
     const [isLoading, setIsLoading] = useState(false);
     const navigate = useNavigate()
     let [messageError, setMessageErro] = useState('');
 
+    // Face Recognition State
+    const webcamRef = useRef(null);
+    const [isModelsLoaded, setIsModelsLoaded] = useState(false);
+    const [capturedImage, setCapturedImage] = useState(null);
+    const [faceDescriptor, setFaceDescriptor] = useState(null);
+    const [isFaceUnique, setIsFaceUnique] = useState(false);
+    const [showWebcam, setShowWebcam] = useState(false);
+
     useEffect(() => {
-        console.log("Loading state changed:", isLoading);
-    }, [isLoading]);
+        const loadModels = async () => {
+            const MODEL_URL = '/models';
+            try {
+                await Promise.all([
+                    faceapi.nets.ssdMobilenetv1.loadFromUri(MODEL_URL),
+                    faceapi.nets.faceLandmark68Net.loadFromUri(MODEL_URL),
+                    faceapi.nets.faceRecognitionNet.loadFromUri(MODEL_URL)
+                ]);
+                setIsModelsLoaded(true);
+                console.log("FaceAPI Models Loaded");
+            } catch (err) {
+                console.error("Error loading models", err);
+                setMessageErro("Error loading Face Recognition models. Please refresh.");
+            }
+        };
+        loadModels();
+    }, []);
+
+    // Check if face is unique
+    const checkFaceUniqueness = async (descriptor) => {
+        const existingUsers = JSON.parse(localStorage.getItem('face_descriptors') || '[]');
+        if (existingUsers.length === 0) return true;
+
+        const faceMatcher = new faceapi.FaceMatcher(
+            existingUsers.map(u => new faceapi.LabeledFaceDescriptors(u.label, [new Float32Array(u.descriptor)]))
+        );
+
+        const bestMatch = faceMatcher.findBestMatch(descriptor);
+        // If match distance is below threshold (default 0.6), it's a match.
+        // bestMatch.label will be 'unknown' if no match found.
+        if (bestMatch.label !== 'unknown') {
+            setMessageErro(`Face already registered as ${bestMatch.label}`);
+            return false;
+        }
+        return true;
+    };
+
+    const capture = async () => {
+        const imageSrc = webcamRef.current.getScreenshot();
+        if (!imageSrc) return;
+
+        // Create an HTMLImageElement from the base64 string
+        const img = new Image();
+        img.src = imageSrc;
+        img.onload = async () => {
+            try {
+                const updatedDetections = await faceapi.detectSingleFace(img).withFaceLandmarks().withFaceDescriptor();
+
+                if (updatedDetections) {
+                    const isUnique = await checkFaceUniqueness(updatedDetections.descriptor);
+                    if (isUnique) {
+                        setCapturedImage(imageSrc);
+                        setFaceDescriptor(Array.from(updatedDetections.descriptor)); // Convert Flash32Array to Array for storage
+                        setIsFaceUnique(true);
+                        setShowWebcam(false);
+
+                        // Set Formik field
+                        // Convert base64 to file
+                        fetch(imageSrc)
+                            .then(res => res.blob())
+                            .then(blob => {
+                                const file = new File([blob], "face_capture.jpg", { type: "image/jpeg" });
+                                formik.setFieldValue("image", file);
+                            });
+
+                        setMessageErro(""); // Clear errors
+                    } else {
+                        setIsFaceUnique(false);
+                    }
+                } else {
+                    setMessageErro("No face detected. Please try again.");
+                }
+            } catch (err) {
+                console.error(err);
+                setMessageErro("Error detecting face.");
+            }
+        };
+    };
+
 
     async function handleRegisterEmployee(values) {
+        if (!isFaceUnique) {
+            setMessageErro("Please capture and verify your face first.");
+            return;
+        }
+
         setIsLoading(true);
         const formData = new FormData();
         formData.append("FullName", values.FullName);
         formData.append("Email", values.Email);
         formData.append("Password", values.Password);
-        formData.append("image", values.image);
+        formData.append("image", values.image); // This is now the captured face image
 
         // Log only readable data
         console.log("FormData being sent:", {
@@ -34,25 +127,47 @@ export default function RegisterEmployee() {
         });
 
         try {
-            const { data } = await axios.post(
-                `https://localhost:7209/api/Employee/register`,
-                formData,
-                {
-                    headers: {
-                        "Content-Type": "multipart/form-data",
-                    },
-                }
-            );
-            setMessageErro(`${data}`);
+            // MOCK BACKEND: Simulate network delay
+            await new Promise(resolve => setTimeout(resolve, 1000));
 
-            console.log("API response:", data);
+            // SIMULATED REGISTRATION
+            const users = JSON.parse(localStorage.getItem('users') || '[]');
+            const userExists = users.some(u => u.email === values.Email);
 
-            if (data === "Employee registered successfully.") {
-                navigate("/login")
+            if (userExists) {
+                throw { response: { data: "Email already exists", status: 409 } };
             }
+
+            // Create new user (Simulate Backend Logic)
+            const newUser = {
+                id: Date.now().toString(),
+                fullName: values.FullName,
+                email: values.Email,
+                password: values.Password, // In real app, hash this!
+                role: 'Employee'
+            };
+
+            users.push(newUser);
+            localStorage.setItem('users', JSON.stringify(users));
+
+            // Save Face Descriptor (Already handled below, but ensuring consistency)
+            const existingFaceData = JSON.parse(localStorage.getItem('face_descriptors') || '[]');
+            existingFaceData.push({
+                label: values.Email,
+                descriptor: faceDescriptor
+            });
+            localStorage.setItem('face_descriptors', JSON.stringify(existingFaceData));
+
+            setMessageErro("Employee registered successfully (Mocked).");
+            navigate("/login");
+
         } catch (error) {
-            console.log("Server returned:", JSON.stringify(error));
-            setMessageErro("Error: Something went wrong during registration.");
+            console.error("Registration Error:", error);
+            if (error.response) {
+                setMessageErro(`Error: ${error.response.data}`);
+            } else {
+                setMessageErro("An unexpected error occurred.");
+            }
         } finally {
             setIsLoading(false);
         }
@@ -156,17 +271,53 @@ export default function RegisterEmployee() {
                                 </div>
                             )}
 
-                            {/* Image Upload */}
-                            <input
-                                className='input-data m-4'
-                                onChange={(event) => {
-                                    formik.setFieldValue("image", event.currentTarget.files[0]);
-                                }}
-                                type="file"
-                                id="image"
-                                name="image"
-                                accept="image/*"
-                            />
+                            {/* Image Upload / Face Capture */}
+                            <div className="d-flex flex-column align-items-center mb-3">
+                                <label className="mb-2">Face Verification (Required)</label>
+                                {!capturedImage ? (
+                                    <>
+                                        {showWebcam ? (
+                                            <div className="webcam-container mb-3" style={{ border: '2px solid #ccc' }}>
+                                                {isModelsLoaded ? (
+                                                    <>
+                                                        <Webcam
+                                                            audio={false}
+                                                            ref={webcamRef}
+                                                            screenshotFormat="image/jpeg"
+                                                            width={320}
+                                                            height={240}
+                                                        />
+                                                        <button type="button" className="btn btn-primary mt-2 w-100" onClick={capture}>Capture & Verify</button>
+                                                    </>
+                                                ) : (
+                                                    <p>Loading Face Recognition Models...</p>
+                                                )}
+                                            </div>
+                                        ) : (
+                                            <button type="button" className="btn btn-outline-primary mb-3" onClick={() => setShowWebcam(true)}>
+                                                Check Camera & Verify Face
+                                            </button>
+                                        )}
+                                    </>
+                                ) : (
+                                    <div className="mb-3 text-center">
+                                        <img src={capturedImage} alt="Captured Face" width="100" height="100" style={{ borderRadius: '50%', objectFit: 'cover' }} />
+                                        <p className="text-success mt-1">Face Verified!</p>
+                                        <button type="button" className="btn btn-sm btn-outline-danger" onClick={() => { setCapturedImage(null); setIsFaceUnique(false); setShowWebcam(true); }}>Retake</button>
+                                    </div>
+                                )}
+
+                                <input
+                                    className='d-none' // Hide the original file input as we use webcam
+                                    onChange={(event) => {
+                                        formik.setFieldValue("image", event.currentTarget.files[0]);
+                                    }}
+                                    type="file"
+                                    id="image"
+                                    name="image"
+                                    accept="image/*"
+                                />
+                            </div>
 
                             {/* Submit Button */}
                             <div className="inf_btn">
@@ -176,7 +327,7 @@ export default function RegisterEmployee() {
                                     </button>
                                 ) : (
                                     <button
-                                        disabled={!(formik.isValid && formik.dirty)}
+                                        disabled={!(formik.isValid && formik.dirty && isFaceUnique)}
                                         className='regist-hero'
                                         type='submit'
                                     >

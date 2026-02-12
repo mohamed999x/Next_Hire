@@ -61,6 +61,12 @@ export default function Header() {
                                     <li className="nav-item">
                                         <NavLink className={({ isActive }) => isActive ? "active-link nav-link" : "nav-link"} to={"/cvbuilder"}>CV creation</NavLink>
                                     </li>
+                                    <li className="nav-item">
+                                        <NavLink className={({ isActive }) => isActive ? "active-link nav-link" : "nav-link"} to={"/mock-interview"}>Interview Practice</NavLink>
+                                    </li>
+                                    <li className="nav-item">
+                                        <NavLink className={({ isActive }) => isActive ? "active-link nav-link" : "nav-link"} to={"/career-roadmap"}>Career Roadmap</NavLink>
+                                    </li>
                                 </>
                             )}
 
@@ -80,41 +86,41 @@ export default function Header() {
                             <li><i className="fa-solid fa-bell"></i></li>
                             <li><i className="fa-solid fa-heart"></i></li>
 
-                           {userData !== null ? (
-    userData.role === "Employee" ? (
-        <>
-            <li>
-                <Link to="/employeepage">
-                    <div className="image">
-                        <img src={compImage} className="w-100" alt="Company" />
-                    </div>
-                </Link>
-            </li>
-            <li onClick={() => setUserData(null)}>
-                <i className="fa-solid fa-person-through-window"></i>
-            </li>
-        </>
-    ) : (
-        <>
-            <li>
-                <Link to="/companypage">
-                    <div className="image">
-                        <img src={compImage} className="w-100" alt="Company" />
-                    </div>
-                </Link>
-            </li>
-            <li onClick={() => setUserData(null)}>
-                <i className="fa-solid fa-person-through-window"></i>
-            </li>
-        </>
-    )
-) : (
-    <li>
-        <NavLink className="the-nav" to="/login">
-            <i className="fa-solid fa-user-tie"></i>
-        </NavLink>
-    </li>
-)}
+                            {userData !== null ? (
+                                userData.role === "Employee" ? (
+                                    <>
+                                        <li>
+                                            <Link to="/employeepage">
+                                                <div className="image">
+                                                    <img src={compImage} className="w-100" alt="Company" />
+                                                </div>
+                                            </Link>
+                                        </li>
+                                        <li onClick={() => setUserData(null)}>
+                                            <i className="fa-solid fa-person-through-window"></i>
+                                        </li>
+                                    </>
+                                ) : (
+                                    <>
+                                        <li>
+                                            <Link to="/companypage">
+                                                <div className="image">
+                                                    <img src={compImage} className="w-100" alt="Company" />
+                                                </div>
+                                            </Link>
+                                        </li>
+                                        <li onClick={() => setUserData(null)}>
+                                            <i className="fa-solid fa-person-through-window"></i>
+                                        </li>
+                                    </>
+                                )
+                            ) : (
+                                <li>
+                                    <NavLink className="the-nav" to="/login">
+                                        <i className="fa-solid fa-user-tie"></i>
+                                    </NavLink>
+                                </li>
+                            )}
 
                         </ul>
                     </div>

@@ -17,27 +17,32 @@ import { TheUserContext } from './Components/UserContext/UserContext'
 import CVBuilder from './Components/CVBuilder/CVBuilder'
 import EmployeePage from './Components/EmployeePage/EmployeePage'
 import JobDetails from './Components/JobDetails/JobDetails'
+import MockInterview from './Components/MockInterview/MockInterview'
+import CareerRoadmap from './Components/CareerRoadmap/CareerRoadmap'
+
 function App() {
   const { userData } = useContext(TheUserContext);
   return (
     <>
       <Routes>
-      <Route path='/' element={<Home />}/>
-      <Route path='/alljobs' element={<ProtectedRoute userData={userData}><AllJobs/></ProtectedRoute>}/>
-      <Route path='/about' element={<About/>}/>
-      <Route path='/login' element={<Login />}/>
-      <Route path='/register' element={< RegisterState/>}/>
-      <Route path='/registeremployee' element={<RegisterEmployee/>}/>
-      <Route path='/registeremployer' element={< RegisterCompany/>}/>
-      <Route path='/companypage' element={< CompanyPage/>}/>
-      <Route path='/employeepage' element={< EmployeePage />}/>
-      <Route path='/internetspeed' element={< InternetSpeedChecker/>}/>
-      <Route path='/industry' element={<Industry/>}/>
-      <Route path='/cvbuilder' element={<ProtectedRoute userData={userData}><CVBuilder /></ProtectedRoute>}/>
-      <Route path='/*' element={<NotFound/>}/>
-      <Route path='/companypage' element={<CompanyPage/>}/>
-      <Route path='/jobdetails' element={<ProtectedRoute userData={userData}><JobDetails/></ProtectedRoute>}/>
-    </Routes>
+        <Route path='/' element={<Home />} />
+        <Route path='/alljobs' element={<ProtectedRoute userData={userData}><AllJobs /></ProtectedRoute>} />
+        <Route path='/about' element={<About />} />
+        <Route path='/login' element={<Login />} />
+        <Route path='/register' element={< RegisterState />} />
+        <Route path='/registeremployee' element={<RegisterEmployee />} />
+        <Route path='/registeremployer' element={< RegisterCompany />} />
+        <Route path='/companypage' element={< CompanyPage />} />
+        <Route path='/employeepage' element={< EmployeePage />} />
+        <Route path='/internetspeed' element={< InternetSpeedChecker />} />
+        <Route path='/industry' element={<Industry />} />
+        <Route path='/cvbuilder' element={<ProtectedRoute userData={userData}><CVBuilder /></ProtectedRoute>} />
+        <Route path='/mock-interview' element={<ProtectedRoute userData={userData}><MockInterview /></ProtectedRoute>} />
+        <Route path='/career-roadmap' element={<ProtectedRoute userData={userData}><CareerRoadmap /></ProtectedRoute>} />
+        <Route path='/*' element={<NotFound />} />
+        <Route path='/companypage' element={<CompanyPage />} />
+        <Route path='/jobdetails' element={<ProtectedRoute userData={userData}><JobDetails /></ProtectedRoute>} />
+      </Routes>
     </>
   )
 }

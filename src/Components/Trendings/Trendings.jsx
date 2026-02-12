@@ -34,7 +34,7 @@ const imageMap = {
 const normalizeString = (str) => str.toLowerCase().replace(/[\s-]/g, "");
 
 export default function Trendings({ number = 12, search = "" }) {
-  
+
   const {
     jobs,
     isJobsLoading,
@@ -49,8 +49,8 @@ export default function Trendings({ number = 12, search = "" }) {
   const filteredBySearch = jobs.filter((job) => {
     const searchText = search.toLowerCase();
     return (
-      job.title.toLowerCase().includes(searchText) ||
-      job.description.toLowerCase().includes(searchText)
+      (job.title?.toLowerCase() || "").includes(searchText) ||
+      (job.description?.toLowerCase() || "").includes(searchText)
     );
   });
 
@@ -58,7 +58,7 @@ export default function Trendings({ number = 12, search = "" }) {
   const finalFilteredJobs = filterByCategory(filteredBySearch, selectedCategory);
 
   const getImageForJob = (title) => {
-    const normalizedTitle = normalizeString(title);
+    const normalizedTitle = normalizeString(title || "");
     for (const keyword in imageMap) {
       if (normalizedTitle.includes(normalizeString(keyword))) {
         return imageMap[keyword];
@@ -89,20 +89,20 @@ export default function Trendings({ number = 12, search = "" }) {
           </p>
           <div className="inf w-100 d-flex justify-content-between align-items-center">
             <NavLink
-            to={"/jobdetails"}
-            onClick={() => localStorage.setItem("selectedJobId", job.jobId)}
-          >
-            <button className="btn custom-btn">Apply</button>
-          </NavLink>
+              to={"/jobdetails"}
+              onClick={() => localStorage.setItem("selectedJobId", job.jobId)}
+            >
+              <button className="btn custom-btn">Apply</button>
+            </NavLink>
 
             <button
-            onClick={() => toggleLikeJob(job)}
-            style={{ border: "none", backgroundColor: "transparent" }}
-          >
-            <i
-              className={`fa-solid fa-heart ${likedJobs.find(j => j.jobId === job.jobId) ? "text-danger" : ""}`}
-            ></i>
-          </button>
+              onClick={() => toggleLikeJob(job)}
+              style={{ border: "none", backgroundColor: "transparent" }}
+            >
+              <i
+                className={`fa-solid fa-heart ${likedJobs.find(j => j.jobId === job.jobId) ? "text-danger" : ""}`}
+              ></i>
+            </button>
           </div>
         </div>
       ))}

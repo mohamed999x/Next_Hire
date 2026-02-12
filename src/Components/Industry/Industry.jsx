@@ -19,21 +19,33 @@ export default function Industry() {
         console.log("FormData being sent:", { name: values.name });
 
         try {
-            const { data } = await axios.post(
-                `https://localhost:7209/api/Companies/AddIndustry?name=${values.name}`,
-                { name: values.name },
-                {
-                    headers: {
-                        "Content-Type": "application/json",
-                    },
-                }
-            );
+            // MOCK BACKEND
+            await new Promise(resolve => setTimeout(resolve, 500));
 
-            console.log("API response:", data);
-            window.location.reload();
+            const industries = JSON.parse(localStorage.getItem('industries') || '[]');
+            const exists = industries.find(i => i.name.toLowerCase() === values.name.toLowerCase());
+
+            if (exists) {
+                setId(exists.id);
+                alert(`Industry already exists. ID: ${exists.id}`);
+                return;
+            }
+
+            const newIndustry = {
+                id: Date.now().toString(),
+                name: values.name
+            };
+
+            industries.push(newIndustry);
+            localStorage.setItem('industries', JSON.stringify(industries));
+
+            console.log("Industry Added:", newIndustry);
+            setId(newIndustry.id);
+            alert(`Industry Added! ID: ${newIndustry.id}`);
+            // window.location.reload(); // No need to reload in mock mode usually, but keeping flow
         } catch (error) {
-            console.log("Server returned:", error.response?.data || error.message);
-            alert("Something went wrong. Please try again.");
+            console.log("Mock Error:", error);
+            alert("Something went wrong.");
         }
     }
     // get industry
@@ -42,21 +54,34 @@ export default function Industry() {
         console.log("FormData being sent:", { name: values.name });
 
         try {
-            const { data } = await axios.get(
-                `https://localhost:7209/api/Companies/GetAllIndustries`,
-            );
-            console.log("API response:", data);
-            data.forEach((industry) => {
-                if(industry.name == values.name && industryState == false) {
-                    setId(industry.id);
-                }else{
-                    setIndustryState(true);
-                    handleIndustry;
-                }
-            })
+            // MOCK BACKEND
+            await new Promise(resolve => setTimeout(resolve, 500));
+
+            // Seed Mock Data if empty
+            let industries = JSON.parse(localStorage.getItem('industries') || '[]');
+            if (industries.length === 0) {
+                industries = [
+                    { id: '1', name: 'IT' },
+                    { id: '2', name: 'Finance' },
+                    { id: '3', name: 'Healthcare' }
+                ];
+                localStorage.setItem('industries', JSON.stringify(industries));
+            }
+
+            console.log("Mock Industries:", industries);
+
+            const found = industries.find(i => i.name.toLowerCase() === values.name.toLowerCase());
+
+            if (found) {
+                setId(found.id);
+                setIndustryState(false);
+            } else {
+                setIndustryState(true);
+                handleIndustry(values); // Corrected function call
+            }
         } catch (error) {
-            console.log("Server returned:", error.response?.data || error.message);
-            alert("Something went wrong. Please try again.");
+            console.log("Mock Error:", error);
+            alert("Something went wrong.");
         }
     }
     const validation = Yup.object({
@@ -78,7 +103,7 @@ export default function Industry() {
         validationSchema: validation,
         onSubmit: submitHandler,
     });
-    
+
 
     return (
         <div className="container-fluid p-0">
@@ -115,7 +140,7 @@ export default function Industry() {
                                     Get Your Industry
                                 </button>
                                 <div className="info">
-                                    <p style={{cursor:"auto"}}>{id}</p>
+                                    <p style={{ cursor: "auto" }}>{id}</p>
                                 </div>
                             </div>
                         </form>

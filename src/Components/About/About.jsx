@@ -93,39 +93,77 @@ export default function About() {
             <h2>Services</h2>
             <div className="properties">
               <div className="property">
-                <i class="fa-solid fa-laptop"></i>
+                <i className="fa-solid fa-laptop"></i>
                 <div className="inf">
                   <h3>Post Jobs</h3>
-                  <p>Employers can post jobs easily</p>
+                  <p>
+                    <Link to="/companypage" style={{ textDecoration: 'none', color: '#777' }}>
+                      Employers can post jobs easily
+                    </Link>
+                  </p>
                 </div>
               </div>
               <div className="property">
-                <i class="fa-solid fa-magnifying-glass"></i>
+                <i className="fa-solid fa-magnifying-glass"></i>
                 <div className="inf">
                   <h3>Filter By Search</h3>
                   <p>
-                    User can search for the needed job and filter the results
-                    would help them
+                    <Link to="/alljobs" style={{ textDecoration: 'none', color: '#777' }}>
+                      User can search for the needed job and filter the results
+                    </Link>
                   </p>
                 </div>
               </div>
               <div className="property">
-                <i class="fa-solid fa-file"></i>
+                <i className="fa-solid fa-file"></i>
                 <div className="inf">
                   <h3>CV Creation</h3>
                   <p>
-                    We offer CV Creation page to help you reach fast and save
-                    your time because we care about you
+                    <Link to="/cvbuilder" style={{ textDecoration: 'none', color: '#777' }}>
+                      We offer CV Creation page to help you reach fast and save your time
+                    </Link>
                   </p>
                 </div>
               </div>
               <div className="property">
-                <i class="fa-solid fa-gauge-simple-high"></i>
+                <i className="fa-solid fa-gauge-simple-high"></i>
                 <div className="inf">
                   <h3>Internet Speed</h3>
                   <p>
-                    You can check your internet speed if the processes are
-                    waiting too much in its page
+                    <Link to="/internetspeed" style={{ textDecoration: 'none', color: '#777' }}>
+                      Check your internet speed to ensure a smooth experience
+                    </Link>
+                  </p>
+                </div>
+              </div>
+              <div className="property">
+                <i className="fa-solid fa-user-shield"></i>
+                <div className="inf">
+                  <h3>Face ID</h3>
+                  <p>
+                    Secure and fast authentication using advanced facial recognition
+                  </p>
+                </div>
+              </div>
+              <div className="property">
+                <i className="fa-solid fa-microphone-lines"></i>
+                <div className="inf">
+                  <h3>Interview Practice</h3>
+                  <p>
+                    <Link to="/mock-interview" style={{ textDecoration: 'none', color: '#777' }}>
+                      Practice with our AI-powered mock interview simulator
+                    </Link>
+                  </p>
+                </div>
+              </div>
+              <div className="property">
+                <i className="fa-solid fa-map-location-dot"></i>
+                <div className="inf">
+                  <h3>Career Roadmap</h3>
+                  <p>
+                    <Link to="/career-roadmap" style={{ textDecoration: 'none', color: '#777' }}>
+                      Get a personalized AI learning path to your dream job
+                    </Link>
                   </p>
                 </div>
               </div>
