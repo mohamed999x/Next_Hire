@@ -1,0 +1,1412 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NextHire — Project Diagrams</title>
+    <script src="https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.min.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: #0a0e1a;
+            color: #e0e6f0;
+            line-height: 1.6;
+        }
+
+        .hero {
+            text-align: center;
+            padding: 60px 20px 40px;
+            background: linear-gradient(135deg, #0a0e1a 0%, #1a1e3a 50%, #0a0e1a 100%);
+            border-bottom: 1px solid rgba(100, 120, 255, 0.15);
+        }
+
+        .hero h1 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, #6ee7b7, #3b82f6, #a78bfa);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 8px;
+        }
+
+        .hero p {
+            color: #8892b0;
+            font-size: 1.1rem;
+        }
+
+        /* Sidebar Navigation */
+        .layout {
+            display: flex;
+            min-height: calc(100vh - 160px);
+        }
+
+        .sidebar {
+            width: 280px;
+            min-width: 280px;
+            background: #0d1025;
+            border-right: 1px solid rgba(100, 120, 255, 0.1);
+            padding: 24px 0;
+            position: sticky;
+            top: 0;
+            height: 100vh;
+            overflow-y: auto;
+        }
+
+        .sidebar h3 {
+            padding: 0 20px 12px;
+            font-size: 0.7rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            color: #6366f1;
+            font-weight: 600;
+        }
+
+        .sidebar a {
+            display: block;
+            padding: 10px 20px;
+            color: #8892b0;
+            text-decoration: none;
+            font-size: 0.88rem;
+            transition: all 0.2s;
+            border-left: 3px solid transparent;
+        }
+
+        .sidebar a:hover {
+            color: #e0e6f0;
+            background: rgba(99, 102, 241, 0.08);
+            border-left-color: #6366f1;
+        }
+
+        .sidebar a .num {
+            color: #6366f1;
+            font-weight: 600;
+            margin-right: 8px;
+            font-size: 0.78rem;
+        }
+
+        /* Main content */
+        .content {
+            flex: 1;
+            padding: 40px 50px;
+            max-width: calc(100% - 280px);
+        }
+
+        .diagram-section {
+            margin-bottom: 60px;
+            scroll-margin-top: 20px;
+        }
+
+        .diagram-section h2 {
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin-bottom: 6px;
+            color: #e0e6f0;
+        }
+
+        .diagram-section h2 .badge {
+            display: inline-block;
+            font-size: 0.65rem;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            padding: 3px 10px;
+            border-radius: 20px;
+            background: rgba(99, 102, 241, 0.15);
+            color: #a5b4fc;
+            margin-left: 12px;
+            vertical-align: middle;
+            font-weight: 500;
+        }
+
+        .diagram-section .desc {
+            color: #64748b;
+            font-size: 0.9rem;
+            margin-bottom: 20px;
+        }
+
+        .diagram-card {
+            background: #111531;
+            border: 1px solid rgba(100, 120, 255, 0.1);
+            border-radius: 16px;
+            padding: 32px;
+            overflow-x: auto;
+            transition: border-color 0.3s;
+        }
+
+        .diagram-card:hover {
+            border-color: rgba(99, 102, 241, 0.3);
+        }
+
+        .diagram-card .mermaid {
+            display: flex;
+            justify-content: center;
+        }
+
+        .diagram-card .mermaid svg {
+            max-width: 100%;
+            height: auto;
+        }
+
+        .gantt-card {
+            min-width: 900px;
+        }
+
+        .gantt-card .mermaid svg {
+            width: 100%;
+            min-height: 700px;
+        }
+
+        /* Custom HTML Gantt Chart */
+        .gantt-chart {
+            min-width: 800px;
+        }
+
+        .gantt-header {
+            display: flex;
+            align-items: center;
+            border-bottom: 1px solid rgba(100, 120, 255, 0.15);
+            padding-bottom: 8px;
+            margin-bottom: 4px;
+        }
+
+        .gantt-label-col {
+            min-width: 220px;
+            max-width: 220px;
+            font-size: 0.82rem;
+            color: #c0c8e0;
+            padding-right: 12px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .gantt-header .gantt-label-col {
+            font-weight: 600;
+            color: #8892b0;
+            text-transform: uppercase;
+            font-size: 0.7rem;
+            letter-spacing: 1.5px;
+        }
+
+        .gantt-timeline {
+            flex: 1;
+            display: flex;
+            position: relative;
+            height: 28px;
+            align-items: center;
+        }
+
+        .gantt-header .gantt-timeline {
+            height: auto;
+        }
+
+        .gantt-header .gantt-timeline span {
+            flex: 1;
+            text-align: center;
+            font-size: 0.65rem;
+            color: #5a6380;
+            font-weight: 500;
+            letter-spacing: 0.5px;
+        }
+
+        .gantt-section-label {
+            font-size: 0.78rem;
+            font-weight: 600;
+            padding: 8px 10px 4px;
+            margin-top: 6px;
+            border-radius: 6px;
+            letter-spacing: 0.5px;
+        }
+
+        .gantt-row {
+            display: flex;
+            align-items: center;
+            padding: 3px 0;
+            transition: background 0.15s;
+            border-radius: 4px;
+        }
+
+        .gantt-row:hover {
+            background: rgba(99, 102, 241, 0.05);
+        }
+
+        .gantt-row .gantt-timeline {
+            background: rgba(255, 255, 255, 0.02);
+            border-radius: 4px;
+        }
+
+        .gantt-bar {
+            position: absolute;
+            height: 20px;
+            border-radius: 4px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.65rem;
+            font-weight: 600;
+            color: #fff;
+            text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.25);
+            transition: transform 0.15s, box-shadow 0.15s;
+        }
+
+        .gantt-bar:hover {
+            transform: scaleY(1.2);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+        }
+
+        .divider {
+            border: none;
+            border-top: 1px solid rgba(100, 120, 255, 0.08);
+            margin: 50px 0;
+        }
+
+        /* Sub-headings inside sections */
+        .sub-title {
+            font-size: 1.1rem;
+            font-weight: 500;
+            color: #a5b4fc;
+            margin: 30px 0 12px;
+        }
+
+        /* Scrollbar */
+        ::-webkit-scrollbar {
+            width: 6px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: #0a0e1a;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: #2d2f5e;
+            border-radius: 3px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: #6366f1;
+        }
+
+        @media (max-width: 900px) {
+            .sidebar {
+                display: none;
+            }
+
+            .content {
+                max-width: 100%;
+                padding: 24px 16px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="hero">
+        <h1>📘 NextHire — Project Diagrams</h1>
+        <p>AI-Powered Career Platform — Software Engineering Documentation</p>
+    </div>
+
+    <div class="layout">
+        <nav class="sidebar">
+            <h3>Diagrams</h3>
+            <a href="#gantt"><span class="num">01</span> Gantt Chart</a>
+            <a href="#network"><span class="num">02</span> Network Diagram</a>
+            <a href="#stakeholders"><span class="num">03</span> Stakeholders Mindmap</a>
+            <a href="#block"><span class="num">04</span> Block Diagram</a>
+            <a href="#usecase"><span class="num">05</span> Use Case Diagram</a>
+            <a href="#activity-job"><span class="num">06</span> Activity — Job Application</a>
+            <a href="#activity-interview"><span class="num">07</span> Activity — Mock Interview</a>
+            <a href="#state-auth"><span class="num">08</span> State — Authentication</a>
+            <a href="#state-cv"><span class="num">09</span> State — CV Builder</a>
+            <a href="#seq-login"><span class="num">10</span> Sequence — Login</a>
+            <a href="#seq-resume"><span class="num">11</span> Sequence — Resume Match</a>
+            <a href="#class"><span class="num">12</span> Class Diagram</a>
+            <a href="#context"><span class="num">13</span> Context Diagram</a>
+            <a href="#dfd0"><span class="num">14</span> DFD Level 0</a>
+            <a href="#dfd1"><span class="num">15</span> DFD Level 1</a>
+            <a href="#dfd2"><span class="num">16</span> DFD Level 2</a>
+            <a href="#erd"><span class="num">17</span> ERD</a>
+            <a href="#units"><span class="num">18</span> System Units</a>
+            <a href="#risk"><span class="num">19</span> Risk Matrix</a>
+        </nav>
+
+        <main class="content">
+
+            <!-- 1. Gantt Chart -->
+            <section class="diagram-section" id="gantt">
+                <h2>Gantt Chart <span class="badge">Project Timeline</span></h2>
+                <p class="desc">Development timeline showing all project phases from Planning through Deployment.</p>
+                <div class="diagram-card" style="padding: 24px 20px; overflow-x: auto;">
+                    <div class="gantt-chart">
+                        <div class="gantt-header">
+                            <div class="gantt-label-col">Task</div>
+                            <div class="gantt-timeline">
+                                <span>W1</span><span>W2</span><span>W3</span><span>W4</span><span>W5</span>
+                                <span>W6</span><span>W7</span><span>W8</span><span>W9</span><span>W10</span>
+                                <span>W11</span><span>W12</span><span>W13</span><span>W14</span><span>W15</span>
+                                <span>W16</span><span>W17</span><span>W18</span><span>W19</span><span>W20</span>
+                                <span>W21</span><span>W22</span><span>W23</span><span>W24</span>
+                            </div>
+                        </div>
+
+                        <!-- Planning -->
+                        <div class="gantt-section-label" style="background: rgba(255,107,107,0.12); color: #ff6b6b;">📋
+                            Planning</div>
+                        <div class="gantt-row">
+                            <div class="gantt-label-col">Requirements Gathering</div>
+                            <div class="gantt-timeline">
+                                <div class="gantt-bar"
+                                    style="left: 0%; width: 8.33%; background: linear-gradient(90deg, #ff6b6b, #ee5a5a);">
+                                    14d</div>
+                            </div>
+                        </div>
+                        <div class="gantt-row">
+                            <div class="gantt-label-col">System Design & Architecture</div>
+                            <div class="gantt-timeline">
+                                <div class="gantt-bar"
+                                    style="left: 8.33%; width: 5.95%; background: linear-gradient(90deg, #ff6b6b, #ee5a5a);">
+                                    10d</div>
+                            </div>
+                        </div>
+                        <div class="gantt-row">
+                            <div class="gantt-label-col">UI/UX Wireframing</div>
+                            <div class="gantt-timeline">
+                                <div class="gantt-bar"
+                                    style="left: 8.33%; width: 5.95%; background: linear-gradient(90deg, #ff6b6b, #ee5a5a);">
+                                    10d</div>
+                            </div>
+                        </div>
+
+                        <!-- Core Development -->
+                        <div class="gantt-section-label" style="background: rgba(255,169,77,0.12); color: #ffa94d;">⚙️
+                            Core Development</div>
+                        <div class="gantt-row">
+                            <div class="gantt-label-col">Project Setup (Vite + React)</div>
+                            <div class="gantt-timeline">
+                                <div class="gantt-bar"
+                                    style="left: 14.28%; width: 1.79%; background: linear-gradient(90deg, #ffa94d, #e89a40);">
+                                    3d</div>
+                            </div>
+                        </div>
+                        <div class="gantt-row">
+                            <div class="gantt-label-col">Authentication (JWT + Face)</div>
+                            <div class="gantt-timeline">
+                                <div class="gantt-bar"
+                                    style="left: 16.07%; width: 5.95%; background: linear-gradient(90deg, #ffa94d, #e89a40);">
+                                    10d</div>
+                            </div>
+                        </div>
+                        <div class="gantt-row">
+                            <div class="gantt-label-col">User Registration System</div>
+                            <div class="gantt-timeline">
+                                <div class="gantt-bar"
+                                    style="left: 16.07%; width: 4.17%; background: linear-gradient(90deg, #ffa94d, #e89a40);">
+                                    7d</div>
+                            </div>
+                        </div>
+                        <div class="gantt-row">
+                            <div class="gantt-label-col">Home Page & Navigation</div>
+                            <div class="gantt-timeline">
+                                <div class="gantt-bar"
+                                    style="left: 20.24%; width: 2.98%; background: linear-gradient(90deg, #ffa94d, #e89a40);">
+                                    5d</div>
+                            </div>
+                        </div>
+
+                        <!-- Job Module -->
+                        <div class="gantt-section-label" style="background: rgba(255,212,59,0.12); color: #ffd43b;">💼
+                            Job Module</div>
+                        <div class="gantt-row">
+                            <div class="gantt-label-col">Job Listings Page</div>
+                            <div class="gantt-timeline">
+                                <div class="gantt-bar"
+                                    style="left: 23.22%; width: 4.17%; background: linear-gradient(90deg, #ffd43b, #e8c235);">
+                                    7d</div>
+                            </div>
+                        </div>
+                        <div class="gantt-row">
+                            <div class="gantt-label-col">Job Details & Search</div>
+                            <div class="gantt-timeline">
+                                <div class="gantt-bar"
+                                    style="left: 27.39%; width: 2.98%; background: linear-gradient(90deg, #ffd43b, #e8c235);">
+                                    5d</div>
+                            </div>
+                        </div>
+                        <div class="gantt-row">
+                            <div class="gantt-label-col">Industry Management</div>
+                            <div class="gantt-timeline">
+                                <div class="gantt-bar"
+                                    style="left: 30.37%; width: 2.38%; background: linear-gradient(90deg, #ffd43b, #e8c235);">
+                                    4d</div>
+                            </div>
+                        </div>
+
+                        <!-- AI Tools -->
+                        <div class="gantt-section-label" style="background: rgba(105,219,124,0.12); color: #69db7c;">🤖
+                            AI Tools</div>
+                        <div class="gantt-row">
+                            <div class="gantt-label-col">AI CV Builder + PDF Export</div>
+                            <div class="gantt-timeline">
+                                <div class="gantt-bar"
+                                    style="left: 32.75%; width: 5.95%; background: linear-gradient(90deg, #69db7c, #51c766);">
+                                    10d</div>
+                            </div>
+                        </div>
+                        <div class="gantt-row">
+                            <div class="gantt-label-col">AI Mock Interview (MCQ)</div>
+                            <div class="gantt-timeline">
+                                <div class="gantt-bar"
+                                    style="left: 38.70%; width: 4.17%; background: linear-gradient(90deg, #69db7c, #51c766);">
+                                    7d</div>
+                            </div>
+                        </div>
+                        <div class="gantt-row">
+                            <div class="gantt-label-col">AI Career Roadmap Generator</div>
+                            <div class="gantt-timeline">
+                                <div class="gantt-bar"
+                                    style="left: 42.87%; width: 2.98%; background: linear-gradient(90deg, #69db7c, #51c766);">
+                                    5d</div>
+                            </div>
+                        </div>
+                        <div class="gantt-row">
+                            <div class="gantt-label-col">AI Resume Matcher</div>
+                            <div class="gantt-timeline">
+                                <div class="gantt-bar"
+                                    style="left: 45.85%; width: 3.57%; background: linear-gradient(90deg, #69db7c, #51c766);">
+                                    6d</div>
+                            </div>
+                        </div>
+                        <div class="gantt-row">
+                            <div class="gantt-label-col">AI Cover Letter Architect</div>
+                            <div class="gantt-timeline">
+                                <div class="gantt-bar"
+                                    style="left: 49.42%; width: 2.98%; background: linear-gradient(90deg, #69db7c, #51c766);">
+                                    5d</div>
+                            </div>
+                        </div>
+                        <div class="gantt-row">
+                            <div class="gantt-label-col">AI Personal Branding</div>
+                            <div class="gantt-timeline">
+                                <div class="gantt-bar"
+                                    style="left: 52.40%; width: 2.38%; background: linear-gradient(90deg, #69db7c, #51c766);">
+                                    4d</div>
+                            </div>
+                        </div>
+                        <div class="gantt-row">
+                            <div class="gantt-label-col">AI Pivot Predictor</div>
+                            <div class="gantt-timeline">
+                                <div class="gantt-bar"
+                                    style="left: 54.78%; width: 2.98%; background: linear-gradient(90deg, #69db7c, #51c766);">
+                                    5d</div>
+                            </div>
+                        </div>
+                        <div class="gantt-row">
+                            <div class="gantt-label-col">AI Offer-Weight Calculator</div>
+                            <div class="gantt-timeline">
+                                <div class="gantt-bar"
+                                    style="left: 57.76%; width: 2.98%; background: linear-gradient(90deg, #69db7c, #51c766);">
+                                    5d</div>
+                            </div>
+                        </div>
+
+                        <!-- Utilities & Polish -->
+                        <div class="gantt-section-label" style="background: rgba(77,171,247,0.12); color: #4dabf7;">🛠️
+                            Utilities & Polish</div>
+                        <div class="gantt-row">
+                            <div class="gantt-label-col">Internet Speed Checker</div>
+                            <div class="gantt-timeline">
+                                <div class="gantt-bar"
+                                    style="left: 60.74%; width: 1.79%; background: linear-gradient(90deg, #4dabf7, #3d9be0);">
+                                    3d</div>
+                            </div>
+                        </div>
+                        <div class="gantt-row">
+                            <div class="gantt-label-col">Error Handling & 404 Page</div>
+                            <div class="gantt-timeline">
+                                <div class="gantt-bar"
+                                    style="left: 62.53%; width: 1.19%; background: linear-gradient(90deg, #4dabf7, #3d9be0);">
+                                    2d</div>
+                            </div>
+                        </div>
+                        <div class="gantt-row">
+                            <div class="gantt-label-col">UI Polish & Responsive Design</div>
+                            <div class="gantt-timeline">
+                                <div class="gantt-bar"
+                                    style="left: 63.72%; width: 4.17%; background: linear-gradient(90deg, #4dabf7, #3d9be0);">
+                                    7d</div>
+                            </div>
+                        </div>
+
+                        <!-- Testing & Deployment -->
+                        <div class="gantt-section-label" style="background: rgba(151,117,250,0.12); color: #9775fa;">🚀
+                            Testing & Deployment</div>
+                        <div class="gantt-row">
+                            <div class="gantt-label-col">Testing & Bug Fixes</div>
+                            <div class="gantt-timeline">
+                                <div class="gantt-bar"
+                                    style="left: 67.89%; width: 5.95%; background: linear-gradient(90deg, #9775fa, #8566e0);">
+                                    10d</div>
+                            </div>
+                        </div>
+                        <div class="gantt-row">
+                            <div class="gantt-label-col">Documentation</div>
+                            <div class="gantt-timeline">
+                                <div class="gantt-bar"
+                                    style="left: 73.84%; width: 2.98%; background: linear-gradient(90deg, #9775fa, #8566e0);">
+                                    5d</div>
+                            </div>
+                        </div>
+                        <div class="gantt-row">
+                            <div class="gantt-label-col">Deployment</div>
+                            <div class="gantt-timeline">
+                                <div class="gantt-bar"
+                                    style="left: 76.82%; width: 1.79%; background: linear-gradient(90deg, #9775fa, #8566e0);">
+                                    3d</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <hr class="divider">
+
+            <!-- 2. Network Diagram -->
+            <section class="diagram-section" id="network">
+                <h2>Network Diagram <span class="badge">PERT</span></h2>
+                <p class="desc">Critical path analysis: A → B → C → D → E → F → G → H = 139 days.</p>
+                <div class="diagram-card">
+                    <pre class="mermaid">
+graph LR
+    A["A: Requirements<br/>25d"] --> B["B: Core Setup<br/>21d"]
+    A --> A2["A2: UI/UX Design<br/>10d"]
+    A2 --> B
+    B --> C["C: Job Module<br/>17d"]
+    B --> B2["B2: Auth System<br/>10d"]
+    B2 --> C
+    C --> D["D: AI Tools<br/>43d"]
+    D --> E["E: Utilities<br/>13d"]
+    E --> F["F: Testing<br/>11d"]
+    F --> G["G: Docs<br/>5d"]
+    G --> H["H: Deploy<br/>4d"]
+
+    style A fill:#ff6b6b,color:#fff
+    style B fill:#ffa94d,color:#fff
+    style C fill:#ffd43b,color:#333
+    style D fill:#69db7c,color:#333
+    style E fill:#4dabf7,color:#fff
+    style F fill:#9775fa,color:#fff
+    style G fill:#f783ac,color:#fff
+    style H fill:#20c997,color:#fff
+                </pre>
+                </div>
+            </section>
+
+            <hr class="divider">
+
+            <!-- 3. Stakeholders Mindmap -->
+            <section class="diagram-section" id="stakeholders">
+                <h2>Stakeholders <span class="badge">Mindmap</span></h2>
+                <p class="desc">Primary, secondary, and external stakeholders of the NextHire platform.</p>
+                <div class="diagram-card">
+                    <pre class="mermaid">
+mindmap
+  root((NextHire<br/>Stakeholders))
+    Primary
+      Job Seekers / Employees
+      Employers / Companies
+    Secondary
+      System Administrator
+      Project Developer
+    External
+      University / Academic Supervisor
+      API Providers
+      Hosting Provider
+                </pre>
+                </div>
+            </section>
+
+            <hr class="divider">
+
+            <!-- 4. Block Diagram -->
+            <section class="diagram-section" id="block">
+                <h2>Block Diagram <span class="badge">Architecture</span></h2>
+                <p class="desc">High-level system architecture showing frontend, state management, and backend layers.
+                </p>
+                <div class="diagram-card">
+                    <pre class="mermaid">
+graph TD
+    B_User["User Browser"]
+    
+    subgraph B_Frontend ["Frontend Layer"]
+        B_Auth["Auth Module"]
+        B_Jobs["Jobs Module"]
+        B_AI["AI Tools"]
+        B_CV["CV Builder"]
+        B_UI["UI Components"]
+        B_Utils["Utilities"]
+    end
+
+    B_Router["React Router v7"]
+
+    subgraph B_State ["State Management"]
+        B_Context["UserContext API"]
+        B_Formik["Formik + Yup"]
+        B_JWT["JWT Decode"]
+    end
+
+    B_API["Axios HTTP Client"]
+
+    subgraph B_Backend ["Backend API Server"]
+        B_AuthAPI["Auth API"]
+        B_JobsAPI["Jobs API"]
+        B_DataAPI["Data API"]
+    end
+
+    B_DBNode[(System Database)]
+
+    B_User --> B_Auth
+    B_Auth --> B_Router
+    B_Router --> B_Context
+    B_Context --> B_API
+    B_API --> B_AuthAPI
+    B_AuthAPI --> B_DBNode
+                </pre>
+                </div>
+            </section>
+
+            <hr class="divider">
+
+            <!-- 5. Use Case Diagram -->
+            <section class="diagram-section" id="usecase">
+                <h2>Use Case Diagram <span class="badge">UML</span></h2>
+                <p class="desc">All system use cases for Employee and Employer actors.</p>
+                <div class="diagram-card">
+                    <pre class="mermaid">
+graph TB
+    subgraph "NextHire System"
+        UC1["Register Account"]
+        UC2["Login (Email + Face)"]
+        UC3["Browse Jobs"]
+        UC4["Search Jobs"]
+        UC5["View Job Details"]
+        UC6["Build CV"]
+        UC7["Export CV as PDF"]
+        UC8["Take Mock Interview"]
+        UC9["Generate Career Roadmap"]
+        UC10["Match Resume to Job"]
+        UC11["Generate Cover Letter"]
+        UC12["Optimize Personal Brand"]
+        UC13["Predict Career Pivot"]
+        UC14["Compare Job Offers"]
+        UC15["Check Internet Speed"]
+        UC16["Manage Industry"]
+        UC17["Post Jobs"]
+        UC18["Manage Company Profile"]
+    end
+
+    Employee((👤 Employee))
+    Employer((🏢 Employer))
+
+    Employee --> UC1
+    Employee --> UC2
+    Employee --> UC3
+    Employee --> UC4
+    Employee --> UC5
+    Employee --> UC6
+    UC6 --> UC7
+    Employee --> UC8
+    Employee --> UC9
+    Employee --> UC10
+    Employee --> UC11
+    Employee --> UC12
+    Employee --> UC13
+    Employee --> UC14
+    Employee --> UC15
+
+    Employer --> UC1
+    Employer --> UC2
+    Employer --> UC16
+    Employer --> UC17
+    Employer --> UC18
+
+    UC3 -.->|"<<include>>"| UC2
+    UC6 -.->|"<<include>>"| UC2
+    UC8 -.->|"<<include>>"| UC2
+    UC17 -.->|"<<include>>"| UC2
+                </pre>
+                </div>
+            </section>
+
+            <hr class="divider">
+
+            <!-- 6. Activity Diagram — Job Application -->
+            <section class="diagram-section" id="activity-job">
+                <h2>Activity Diagram — Job Application <span class="badge">Workflow</span></h2>
+                <p class="desc">End-to-end flow from visiting NextHire to applying for a job.</p>
+                <div class="diagram-card">
+                    <pre class="mermaid">
+flowchart TD
+    Start([Start]) --> Visit["Visit NextHire"]
+    Visit --> LoggedIn{"Logged In?"}
+    LoggedIn -->|No| Register["Register / Login"]
+    Register --> FaceAuth{"Use Face Auth?"}
+    FaceAuth -->|Yes| ScanFace["Scan Face via Webcam"]
+    ScanFace --> Verify{"Face Matched?"}
+    Verify -->|No| ManualLogin["Fallback to Manual Login"]
+    Verify -->|Yes| Dashboard
+    FaceAuth -->|No| ManualLogin
+    ManualLogin --> Dashboard
+    LoggedIn -->|Yes| Dashboard["Dashboard"]
+    Dashboard --> SearchJob["Search / Browse Jobs"]
+    SearchJob --> ViewJob["View Job Details"]
+    ViewJob --> PrepareApp{"Prepare Application?"}
+    PrepareApp -->|Yes| BuildCV["Build CV with AI"]
+    BuildCV --> ScoreCV["Check CV Score"]
+    ScoreCV --> ExportPDF["Export CV as PDF"]
+    ExportPDF --> MatchResume["Match Resume to Job"]
+    MatchResume --> GenCover["Generate Cover Letter"]
+    GenCover --> Apply["Apply for Job"]
+    PrepareApp -->|No| Apply
+    Apply --> End([End])
+
+    style Start fill:#20c997,color:#fff
+    style End fill:#ff6b6b,color:#fff
+    style Dashboard fill:#4dabf7,color:#fff
+                </pre>
+                </div>
+            </section>
+
+            <hr class="divider">
+
+            <!-- 7. Activity Diagram — Mock Interview -->
+            <section class="diagram-section" id="activity-interview">
+                <h2>Activity Diagram — Mock Interview <span class="badge">Workflow</span></h2>
+                <p class="desc">MCQ-based mock interview flow with scoring and feedback.</p>
+                <div class="diagram-card">
+                    <pre class="mermaid">
+flowchart TD
+    Start([Start]) --> Select["Select Interview Category"]
+    Select --> SetQ["Load MCQ Questions"]
+    SetQ --> ShowQ["Display Question & Options"]
+    ShowQ --> Answer["User Selects Answer"]
+    Answer --> Submit["Submit Answer"]
+    Submit --> Check{"Correct?"}
+    Check -->|Yes| GreenFB["✅ Show Correct Feedback"]
+    Check -->|No| RedFB["❌ Show Wrong + Correct Answer"]
+    GreenFB --> MoreQ{"More Questions?"}
+    RedFB --> MoreQ
+    MoreQ -->|Yes| NextQ["Next Question"]
+    NextQ --> ShowQ
+    MoreQ -->|No| Score["Calculate Final Score"]
+    Score --> ShowResult["Display Score & Percentage"]
+    ShowResult --> End([End])
+                </pre>
+                </div>
+            </section>
+
+            <hr class="divider">
+
+            <!-- 8. State Diagram — Authentication -->
+            <section class="diagram-section" id="state-auth">
+                <h2>State Diagram — Authentication <span class="badge">UML</span></h2>
+                <p class="desc">User authentication states from Guest through Login/Registration to Authenticated.</p>
+                <div class="diagram-card">
+                    <pre class="mermaid">
+stateDiagram-v2
+    [*] --> Guest
+    Guest --> Registering : Click Register
+    Registering --> SelectRole : Submit Form
+    SelectRole --> EmployeeReg : Select Employee
+    SelectRole --> CompanyReg : Select Company
+    EmployeeReg --> Guest : Registration Complete
+    CompanyReg --> Guest : Registration Complete
+    Guest --> LoggingIn : Click Login
+    LoggingIn --> FaceVerification : Enable Face Auth
+    LoggingIn --> Authenticated : Valid Credentials
+    FaceVerification --> Authenticated : Face Matched
+    FaceVerification --> LoggingIn : Face Not Matched
+    LoggingIn --> Guest : Invalid Credentials
+    Authenticated --> Guest : Logout / Token Expired
+    Authenticated --> [*]
+                </pre>
+                </div>
+            </section>
+
+            <hr class="divider">
+
+            <!-- 9. State Diagram — CV Builder -->
+            <section class="diagram-section" id="state-cv">
+                <h2>State Diagram — CV Builder <span class="badge">UML</span></h2>
+                <p class="desc">CV Builder lifecycle from empty form to exported PDF.</p>
+                <div class="diagram-card">
+                    <pre class="mermaid">
+stateDiagram-v2
+    [*] --> Empty
+    Empty --> Editing : Start Filling Form
+    Editing --> Editing : Update Fields
+    Editing --> PhotoUploaded : Upload Photo
+    PhotoUploaded --> Editing : Continue Editing
+    Editing --> CertsUploaded : Upload Certificates
+    CertsUploaded --> Editing : Continue Editing
+    Editing --> Scored : Calculate Score
+    Scored --> Editing : Edit to Improve
+    Scored --> Previewing : Preview CV
+    Previewing --> Editing : Back to Edit
+    Previewing --> Exporting : Download PDF
+    Exporting --> Complete : PDF Generated
+    Complete --> Editing : Edit Again
+    Complete --> [*]
+                </pre>
+                </div>
+            </section>
+
+            <hr class="divider">
+
+            <!-- 10. Sequence Diagram — Login -->
+            <section class="diagram-section" id="seq-login">
+                <h2>Sequence Diagram — Login with Face Recognition <span class="badge">UML</span></h2>
+                <p class="desc">Interaction between User, Browser, Face API, Webcam, and Backend during
+                    face-authenticated login.</p>
+                <div class="diagram-card">
+                    <pre class="mermaid">
+sequenceDiagram
+    actor User
+    participant Browser
+    participant LoginPage
+    participant FaceAPI as face-api.js
+    participant Webcam
+    participant API as Backend API
+    participant JWT
+
+    User->>Browser: Navigate to /login
+    Browser->>LoginPage: Render Login Form
+    User->>LoginPage: Enter Email & Password
+    User->>LoginPage: Enable Face Recognition
+    LoginPage->>FaceAPI: Load Face Detection Models
+    FaceAPI-->>LoginPage: Models Ready
+    LoginPage->>Webcam: Activate Camera
+    Webcam-->>User: Show Video Feed
+    User->>LoginPage: Click "Verify Face"
+    LoginPage->>Webcam: Capture Frame
+    Webcam-->>LoginPage: Image Data
+    LoginPage->>FaceAPI: Detect Face in Image
+    FaceAPI-->>LoginPage: Face Descriptor
+    LoginPage->>API: Send Credentials + Face Data
+    API-->>LoginPage: JWT Token
+    LoginPage->>JWT: Decode & Store Token
+    JWT-->>LoginPage: User Data
+    LoginPage->>Browser: Redirect to Dashboard
+                </pre>
+                </div>
+            </section>
+
+            <hr class="divider">
+
+            <!-- 11. Sequence Diagram — Resume Matching -->
+            <section class="diagram-section" id="seq-resume">
+                <h2>Sequence Diagram — AI Resume Matching <span class="badge">UML</span></h2>
+                <p class="desc">Skill extraction, match calculation, and resource recommendation flow.</p>
+                <div class="diagram-card">
+                    <pre class="mermaid">
+sequenceDiagram
+    actor User
+    participant MatcherPage as Resume Matcher
+    participant SkillEngine as Skill Engine
+    participant Resources as Resources DB
+
+    User->>MatcherPage: Paste Job Description
+    User->>MatcherPage: Paste Resume Text
+    User->>MatcherPage: Click "Calculate Match"
+    MatcherPage->>SkillEngine: Extract Skills from JD
+    SkillEngine-->>MatcherPage: JD Skills List
+    MatcherPage->>SkillEngine: Extract Skills from Resume
+    SkillEngine-->>MatcherPage: Resume Skills List
+    MatcherPage->>MatcherPage: Calculate Match Percentage
+    MatcherPage->>MatcherPage: Identify Missing Skills
+    MatcherPage->>Resources: Fetch Learning Links
+    Resources-->>MatcherPage: Resource URLs
+    MatcherPage->>Resources: Fetch Project Suggestions
+    Resources-->>MatcherPage: Project Ideas
+    MatcherPage-->>User: Display Score + Skills + Resources
+                </pre>
+                </div>
+            </section>
+
+            <hr class="divider">
+
+            <!-- 12. Class Diagram -->
+            <section class="diagram-section" id="class">
+                <h2>Class Diagram <span class="badge">UML</span></h2>
+                <p class="desc">Object-oriented class structure with inheritance and relationships across all system
+                    entities.</p>
+                <div class="diagram-card">
+                    <pre class="mermaid">
+classDiagram
+    class User {
+        +String id
+        +String email
+        +String password
+        +String name
+        +String role
+        +String token
+        +login()
+        +register()
+        +logout()
+    }
+
+    class Employee {
+        +String phone
+        +String linkedin
+        +String github
+        +String skills
+        +String experience
+        +String education
+        +buildCV()
+        +searchJobs()
+        +applyForJob()
+    }
+
+    class Company {
+        +String companyName
+        +String industry
+        +String logo
+        +postJob()
+        +manageListings()
+    }
+
+    class Job {
+        +String id
+        +String title
+        +String description
+        +String salary
+        +String location
+        +String requirements
+        +String companyId
+        +getDetails()
+    }
+
+    class Industry {
+        +String id
+        +String name
+        +create()
+        +search()
+    }
+
+    class CVBuilder {
+        +Object formData
+        +String photo
+        +Array certificates
+        +Number score
+        +handleChange()
+        +uploadPhoto()
+        +uploadCertificates()
+        +calculateScore()
+        +getSuggestions()
+        +exportPDF()
+    }
+
+    class MockInterview {
+        +String category
+        +Array questions
+        +Number currentIndex
+        +Number score
+        +startInterview()
+        +handleAnswer()
+        +submitAnswer()
+        +nextQuestion()
+        +calculateScore()
+    }
+
+    class ResumeMatcher {
+        +String jobDescription
+        +String resumeText
+        +Number matchScore
+        +Array matchedSkills
+        +Array missingSkills
+        +calculateMatch()
+        +getResources()
+        +getProjectIdeas()
+    }
+
+    class CareerRoadmap {
+        +String goal
+        +Array roadmapSteps
+        +generateRoadmap()
+    }
+
+    class CoverLetterArchitect {
+        +String jobDescription
+        +String skills
+        +String generatedLetter
+        +generateLetter()
+        +animateText()
+        +copyToClipboard()
+    }
+
+    class PersonalBranding {
+        +String input
+        +Object results
+        +analyzeBranding()
+    }
+
+    class PivotPredictor {
+        +String currentRole
+        +Number yearsExp
+        +Object prediction
+        +analyzeFuture()
+    }
+
+    class OfferCalculator {
+        +Object offer1
+        +Object offer2
+        +Object weights
+        +calculateValues()
+        +compareOffers()
+    }
+
+    User <|-- Employee
+    User <|-- Company
+    Company "1" --> "*" Job : posts
+    Employee "*" --> "*" Job : applies
+    Job "*" --> "1" Industry : belongs to
+    Employee "1" --> "1" CVBuilder : uses
+    Employee "1" --> "*" MockInterview : takes
+    Employee "1" --> "*" ResumeMatcher : uses
+    Employee "1" --> "*" CareerRoadmap : generates
+    Employee "1" --> "*" CoverLetterArchitect : uses
+    Employee "1" --> "1" PersonalBranding : uses
+    Employee "1" --> "*" PivotPredictor : uses
+    Employee "1" --> "*" OfferCalculator : uses
+                </pre>
+                </div>
+            </section>
+
+            <hr class="divider">
+
+            <!-- 13. Context Diagram -->
+            <section class="diagram-section" id="context">
+                <h2>Context Diagram <span class="badge">System</span></h2>
+                <p class="desc">External entities and their interactions with the NextHire system.</p>
+                <div class="diagram-card">
+                    <pre class="mermaid">
+graph TB
+    Employee((👤 Employee))
+    Employer((🏢 Employer))
+    FaceAPI((🔍 Face API))
+    EmailService((📧 Email Service))
+    PDFEngine((📄 PDF Engine))
+
+    Employee -->|"Registration, Login,<br/>Job Search, AI Tools"| System["🖥️ NextHire System"]
+    System -->|"Job Listings,<br/>AI Results, CV PDF"| Employee
+
+    Employer -->|"Registration, Login,<br/>Post Jobs"| System
+    System -->|"Dashboard,<br/>Applicant Data"| Employer
+
+    System -->|"Face Detection<br/>Request"| FaceAPI
+    FaceAPI -->|"Face Match<br/>Result"| System
+
+    System -->|"Generate<br/>CV PDF"| PDFEngine
+    PDFEngine -->|"PDF File"| System
+                </pre>
+                </div>
+            </section>
+
+            <hr class="divider">
+
+            <!-- 14. DFD Level 0 -->
+            <section class="diagram-section" id="dfd0">
+                <h2>DFD Level 0 <span class="badge">Data Flow</span></h2>
+                <p class="desc">Top-level context data flow diagram.</p>
+                <div class="diagram-card">
+                    <pre class="mermaid">
+graph LR
+    Employee((Employee)) -->|"Credentials, CV Data,<br/>Search Queries"| System["0<br/>NextHire<br/>System"]
+    System -->|"Jobs, AI Results,<br/>PDF, Scores"| Employee
+
+    Employer((Employer)) -->|"Company Data,<br/>Job Postings"| System
+    System -->|"Dashboard,<br/>Analytics"| Employer
+
+    System <-->|"Read/Write"| DB[("Database")]
+                </pre>
+                </div>
+            </section>
+
+            <hr class="divider">
+
+            <!-- 15. DFD Level 1 -->
+            <section class="diagram-section" id="dfd1">
+                <h2>DFD Level 1 <span class="badge">Data Flow</span></h2>
+                <p class="desc">Decomposed data flow showing Auth, Job Management, CV Builder, Mock Interview, and AI
+                    Analysis processes.</p>
+                <div class="diagram-card">
+                    <pre class="mermaid">
+graph TB
+    Employee((Employee))
+    Employer((Employer))
+
+    Employee -->|"Credentials"| P1["1.0<br/>Auth<br/>Process"]
+    P1 -->|"Token"| Employee
+    P1 <-->|"User Data"| D1[("D1: Users")]
+
+    Employee -->|"Search Query"| P2["2.0<br/>Job<br/>Management"]
+    P2 -->|"Job Listings"| Employee
+    Employer -->|"Job Post"| P2
+    P2 <-->|"Job Data"| D2[("D2: Jobs")]
+    P2 <-->|"Industry Data"| D3[("D3: Industries")]
+
+    Employee -->|"CV Data"| P3["3.0<br/>CV<br/>Builder"]
+    P3 -->|"PDF + Score"| Employee
+    P3 <-->|"CV Data"| D4[("D4: CVs")]
+
+    Employee -->|"Category"| P4["4.0<br/>Mock<br/>Interview"]
+    P4 -->|"Questions + Score"| Employee
+    P4 <-->|"Q&A Data"| D5[("D5: Questions")]
+
+    Employee -->|"Resume + JD"| P5["5.0<br/>AI Analysis<br/>Tools"]
+    P5 -->|"Match Score,<br/>Roadmap, Letters"| Employee
+                </pre>
+                </div>
+            </section>
+
+            <hr class="divider">
+
+            <!-- 16. DFD Level 2 -->
+            <section class="diagram-section" id="dfd2">
+                <h2>DFD Level 2 — AI Analysis Tools <span class="badge">Data Flow</span></h2>
+                <p class="desc">Detailed breakdown of AI Analysis Tools (Process 5.0) into six sub-processes.</p>
+                <div class="diagram-card">
+                    <pre class="mermaid">
+graph TB
+    Employee((Employee))
+
+    Employee -->|"Resume + JD"| P51["5.1<br/>Resume<br/>Matcher"]
+    P51 -->|"Match Score +<br/>Missing Skills"| Employee
+    P51 <-->|"Skills Data"| D51[("D51: Skills DB")]
+
+    Employee -->|"Job Title"| P52["5.2<br/>Career<br/>Roadmap"]
+    P52 -->|"Roadmap Steps"| Employee
+    P52 <-->|"Templates"| D52[("D52: Roadmap Templates")]
+
+    Employee -->|"Skills + JD"| P53["5.3<br/>Cover Letter<br/>Generator"]
+    P53 -->|"Generated Letter"| Employee
+
+    Employee -->|"Bio Text"| P54["5.4<br/>Personal<br/>Branding"]
+    P54 -->|"3 Style Suggestions"| Employee
+
+    Employee -->|"Role + Experience"| P55["5.5<br/>Pivot<br/>Predictor"]
+    P55 -->|"Risk + Alternatives"| Employee
+
+    Employee -->|"2 Offers + Weights"| P56["5.6<br/>Offer<br/>Calculator"]
+    P56 -->|"Comparison Result"| Employee
+                </pre>
+                </div>
+            </section>
+
+            <hr class="divider">
+
+            <!-- 17. ERD -->
+            <section class="diagram-section" id="erd">
+                <h2>Entity Relationship Diagram <span class="badge">Database</span></h2>
+                <p class="desc">Database entities and their relationships with full attribute listing.</p>
+                <div class="diagram-card">
+                    <pre class="mermaid">
+erDiagram
+    USERS ||--o| COMPANIES : "has (if employer)"
+    USERS ||--o{ CVS : "creates"
+    USERS ||--o{ APPLICATIONS : "submits"
+    COMPANIES ||--o{ JOBS : "posts"
+    INDUSTRIES ||--o{ COMPANIES : "categorizes"
+    JOBS ||--o{ APPLICATIONS : "receives"
+    CVS ||--o{ APPLICATIONS : "attached to"
+
+    USERS {
+        int id PK
+        string email UK
+        string password
+        string name
+        enum role
+        string phone
+        text profile_image
+        json face_descriptor
+        timestamp created_at
+    }
+
+    COMPANIES {
+        int id PK
+        int user_id FK
+        string company_name
+        int industry_id FK
+        text logo
+        text description
+    }
+
+    JOBS {
+        int id PK
+        int company_id FK
+        string title
+        text description
+        text requirements
+        string salary
+        string location
+        string category
+        timestamp created_at
+    }
+
+    INDUSTRIES {
+        int id PK
+        string name UK
+    }
+
+    CVS {
+        int id PK
+        int user_id FK
+        string full_name
+        string email
+        string phone
+        string linkedin
+        string github
+        text experience
+        text education
+        text skills
+        text photo
+        json certificates
+        int score
+    }
+
+    APPLICATIONS {
+        int id PK
+        int user_id FK
+        int job_id FK
+        int cv_id FK
+        enum status
+        timestamp applied_at
+    }
+                </pre>
+                </div>
+            </section>
+
+            <hr class="divider">
+
+            <!-- 18. System Units -->
+            <section class="diagram-section" id="units">
+                <h2>System Units <span class="badge">Decomposition</span></h2>
+                <p class="desc">Hierarchical unit decomposition showing all 27 components across 6 units.</p>
+                <div class="diagram-card">
+                    <pre class="mermaid">
+graph TD
+    System["NextHire Platform"]
+    System --> U1["Authentication Unit"]
+    System --> U2["Job Management Unit"]
+    System --> U3["AI Career Tools Unit"]
+    System --> U4["User Profile Unit"]
+    System --> U5["Utility Unit"]
+    System --> U6["UI/Navigation Unit"]
+
+    U1 --> U1A["Login Component"]
+    U1 --> U1B["Registration Component"]
+    U1 --> U1C["Face Recognition Module"]
+    U1 --> U1D["JWT Token Manager"]
+    U1 --> U1E["Protected Route Guard"]
+
+    U2 --> U2A["Job Listings Component"]
+    U2 --> U2B["Job Details Component"]
+    U2 --> U2C["Job Search Engine"]
+    U2 --> U2D["Industry Manager"]
+    U2 --> U2E["Trending Jobs Component"]
+
+    U3 --> U3A["CV Builder + PDF Export"]
+    U3 --> U3B["Mock Interview Engine"]
+    U3 --> U3C["Career Roadmap Generator"]
+    U3 --> U3D["Resume Matcher"]
+    U3 --> U3E["Cover Letter Architect"]
+    U3 --> U3F["Personal Branding"]
+    U3 --> U3G["Pivot Predictor"]
+    U3 --> U3H["Offer Calculator"]
+
+    U4 --> U4A["Employee Dashboard"]
+    U4 --> U4B["Company Dashboard"]
+    U4 --> U4C["User Context (State)"]
+
+    U5 --> U5A["Internet Speed Checker"]
+    U5 --> U5B["Error Boundary"]
+
+    U6 --> U6A["Header / Navbar"]
+    U6 --> U6B["Footer"]
+    U6 --> U6C["Home Page"]
+    U6 --> U6D["About Page"]
+    U6 --> U6E["404 Page"]
+                </pre>
+                </div>
+            </section>
+
+            <hr class="divider">
+
+            <!-- 19. Risk Matrix -->
+            <section class="diagram-section" id="risk">
+                <h2>Risk Assessment Matrix <span class="badge">Quadrant</span></h2>
+                <p class="desc">Risk probability vs. impact analysis for all identified project risks.</p>
+                <div class="diagram-card">
+                    <pre class="mermaid">
+quadrantChart
+    title Risk Assessment Matrix
+    x-axis Low Impact --> High Impact
+    y-axis Low Probability --> High Probability
+    quadrant-1 Monitor
+    quadrant-2 Critical
+    quadrant-3 Accept
+    quadrant-4 Mitigate
+    API Failures: [0.7, 0.4]
+    Data Loss: [0.8, 0.2]
+    Security Breach: [0.9, 0.3]
+    Browser Compat: [0.3, 0.5]
+    Scope Creep: [0.5, 0.7]
+    Face API Fail: [0.4, 0.6]
+    Performance: [0.6, 0.5]
+                </pre>
+                </div>
+            </section>
+
+        </main>
+    </div>
+
+    <script>
+        mermaid.initialize({
+            startOnLoad: true,
+            theme: 'dark',
+            themeVariables: {
+                darkMode: true,
+                background: '#111531',
+                primaryColor: '#6366f1',
+                primaryTextColor: '#e0e6f0',
+                primaryBorderColor: '#4f46e5',
+                lineColor: '#64748b',
+                secondaryColor: '#1e293b',
+                tertiaryColor: '#1a1e3a',
+                fontFamily: 'Inter, sans-serif',
+            },
+            flowchart: { curve: 'basis', padding: 20 },
+
+            sequence: { mirrorActors: false },
+            gantt: {
+                fontSize: 14,
+                barHeight: 28,
+                leftPadding: 200,
+                topPadding: 60,
+                barGap: 6,
+                sectionFontSize: 16,
+                numberSectionStyles: 6,
+            },
+        });
+    </script>
+
+</body>
+
+</html>
