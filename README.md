@@ -282,5 +282,5 @@ Practice interviews with multiple-choice questions (MCQ):
 ---
 
 <p align="center">
-  Made with ❤️ by Mohamed AbdElhameed
+  Made with ❤️ Mohamed AbdElhameed
 </p>
