@@ -1,0 +1,418 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>NextHire — Documentation</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif;
+      background: #0d1117;
+      color: #e6edf3;
+      line-height: 1.7;
+      padding: 40px 20px;
+    }
+
+    .container {
+      max-width: 900px;
+      margin: 0 auto;
+      background: #161b22;
+      border: 1px solid #30363d;
+      border-radius: 12px;
+      padding: 48px;
+    }
+
+    h1 { font-size: 2em; margin-bottom: 16px; padding-bottom: 12px; border-bottom: 1px solid #30363d; color: #fff; }
+    h2 { font-size: 1.5em; margin-top: 32px; margin-bottom: 16px; padding-bottom: 8px; border-bottom: 1px solid #30363d; color: #fff; }
+    h3 { font-size: 1.25em; margin-top: 24px; margin-bottom: 12px; color: #79c0ff; }
+
+    p { margin-bottom: 16px; }
+    a { color: #58a6ff; text-decoration: none; }
+    a:hover { text-decoration: underline; }
+    strong { color: #fff; }
+
+    ul, ol { padding-left: 24px; margin-bottom: 16px; }
+    li { margin-bottom: 6px; }
+
+    code {
+      background: #1f2937;
+      color: #79c0ff;
+      padding: 2px 8px;
+      border-radius: 6px;
+      font-size: 0.9em;
+      font-family: 'JetBrains Mono', 'Fira Code', monospace;
+    }
+
+    pre {
+      background: #0d1117;
+      border: 1px solid #30363d;
+      border-radius: 8px;
+      padding: 20px;
+      overflow-x: auto;
+      margin-bottom: 16px;
+    }
+    pre code {
+      background: none;
+      padding: 0;
+      color: #e6edf3;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-bottom: 20px;
+      border-radius: 8px;
+      overflow: hidden;
+    }
+    thead { background: #21262d; }
+    th {
+      text-align: left;
+      padding: 12px 16px;
+      font-weight: 600;
+      color: #fff;
+      border-bottom: 2px solid #30363d;
+    }
+    td {
+      padding: 10px 16px;
+      border-bottom: 1px solid #21262d;
+    }
+    tr:hover { background: #1c2128; }
+
+    blockquote {
+      border-left: 4px solid #58a6ff;
+      padding: 8px 16px;
+      margin: 16px 0;
+      background: #161b22;
+      color: #8b949e;
+      border-radius: 0 8px 8px 0;
+    }
+
+    hr {
+      border: none;
+      border-top: 1px solid #30363d;
+      margin: 32px 0;
+    }
+
+    img { max-width: 100%; }
+    .badges img { margin: 0 4px; }
+
+    p[align="center"] { text-align: center; }
+    h1[align="center"] { text-align: center; border-bottom: none; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <p align="center">
+      <img src="src/assets/1745237649662.png" alt="NextHire Logo" width="120"/>
+    </p>
+
+    <h1 align="center">🚀 NextHire — AI-Powered Career Platform</h1>
+
+    <p align="center">
+      <strong>Your fastest way to find, prepare for, and land your dream job.</strong>
+    </p>
+
+    <p align="center" class="badges">
+      <img src="https://img.shields.io/badge/React-19-61DAFB?logo=react" alt="React 19"/>
+      <img src="https://img.shields.io/badge/Vite-6-646CFF?logo=vite" alt="Vite 6"/>
+      <img src="https://img.shields.io/badge/Bootstrap-5-7952B3?logo=bootstrap" alt="Bootstrap 5"/>
+      <img src="https://img.shields.io/badge/License-Private-red" alt="License"/>
+    </p>
+
+    <hr>
+
+    <h2>📖 Table of Contents</h2>
+    <ul>
+      <li><a href="#overview">Overview</a></li>
+      <li><a href="#features">Features</a></li>
+      <li><a href="#tech-stack">Tech Stack</a></li>
+      <li><a href="#project-structure">Project Structure</a></li>
+      <li><a href="#getting-started">Getting Started</a></li>
+      <li><a href="#available-scripts">Available Scripts</a></li>
+      <li><a href="#feature-details">Feature Details</a></li>
+      <li><a href="#routing">Routing & Navigation</a></li>
+      <li><a href="#auth">Authentication & Security</a></li>
+      <li><a href="#author">Author</a></li>
+    </ul>
+
+    <hr>
+
+    <h2 id="overview">Overview</h2>
+    <p><strong>NextHire</strong> is a modern, AI-driven career platform built with React 19 and Vite. It combines intelligent job search with a powerful suite of AI career tools — from building professional CVs and cover letters, to mock interviews, career roadmaps, and offer analysis. The platform serves both <strong>job seekers (employees)</strong> and <strong>employers (companies)</strong>, providing a comprehensive hiring ecosystem.</p>
+
+    <hr>
+
+    <h2 id="features">Features</h2>
+    <p>NextHire ships with <strong>13 core features</strong> organized across three pillars:</p>
+
+    <h3>🔍 Job Search & Management</h3>
+    <table>
+      <thead><tr><th>#</th><th>Feature</th><th>Description</th></tr></thead>
+      <tbody>
+        <tr><td>1</td><td><strong>Job Search & Listings</strong></td><td>Browse, search, and filter trending job listings with real-time search</td></tr>
+        <tr><td>2</td><td><strong>Job Details</strong></td><td>View detailed job information including requirements, salary, and company info</td></tr>
+        <tr><td>3</td><td><strong>Industry Management</strong></td><td>Add and manage industry categories for job classification</td></tr>
+        <tr><td>4</td><td><strong>Company Dashboard</strong></td><td>Employers can manage their profile and job postings</td></tr>
+        <tr><td>5</td><td><strong>Employee Dashboard</strong></td><td>Job seekers can manage their profile and applications</td></tr>
+      </tbody>
+    </table>
+
+    <h3>🤖 AI-Powered Career Tools</h3>
+    <table>
+      <thead><tr><th>#</th><th>Feature</th><th>Description</th></tr></thead>
+      <tbody>
+        <tr><td>6</td><td><strong>AI CV Builder</strong></td><td>Build professional CVs with real-time scoring, PDF export, and image/certificate uploads</td></tr>
+        <tr><td>7</td><td><strong>AI Mock Interview</strong></td><td>Practice with MCQ-based interviews across Frontend, Backend, and HR categories with instant scoring</td></tr>
+        <tr><td>8</td><td><strong>AI Career Roadmap Generator</strong></td><td>Enter your dream job title and get a personalized step-by-step learning roadmap</td></tr>
+        <tr><td>9</td><td><strong>AI Resume Matcher</strong></td><td>Paste a job description and your resume — get a match score, missing skills, resources, and project ideas</td></tr>
+        <tr><td>10</td><td><strong>AI Cover Letter Architect</strong></td><td>Generate tailored cover letters with typing animation based on job description and your skills</td></tr>
+        <tr><td>11</td><td><strong>AI Personal Branding Assistant</strong></td><td>Optimize your LinkedIn bio/headline with Professional, Creative, and Minimalist style suggestions</td></tr>
+        <tr><td>12</td><td><strong>AI Pivot Predictor</strong></td><td>Analyze your career future — get automation risk assessment, emerging roles, and upskilling recommendations</td></tr>
+        <tr><td>13</td><td><strong>AI Offer-Weight Calculator</strong></td><td>Compare two job offers side-by-side across salary, growth, culture, benefits, and work-life balance</td></tr>
+      </tbody>
+    </table>
+
+    <h3>🛠️ Utility Tools</h3>
+    <table>
+      <thead><tr><th>#</th><th>Feature</th><th>Description</th></tr></thead>
+      <tbody>
+        <tr><td>14</td><td><strong>Internet Speed Checker</strong></td><td>Test your internet download speed directly within the platform</td></tr>
+        <tr><td>15</td><td><strong>Face Recognition Login</strong></td><td>Biometric face verification using <code>face-api.js</code> and webcam during authentication</td></tr>
+      </tbody>
+    </table>
+
+    <hr>
+
+    <h2 id="tech-stack">Tech Stack</h2>
+    <table>
+      <thead><tr><th>Category</th><th>Technology</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Framework</strong></td><td>React 19</td></tr>
+        <tr><td><strong>Build Tool</strong></td><td>Vite 6</td></tr>
+        <tr><td><strong>Routing</strong></td><td>React Router DOM v7</td></tr>
+        <tr><td><strong>Styling</strong></td><td>Bootstrap 5, Font Awesome 6, Custom CSS</td></tr>
+        <tr><td><strong>Forms</strong></td><td>Formik + Yup validation</td></tr>
+        <tr><td><strong>HTTP Client</strong></td><td>Axios</td></tr>
+        <tr><td><strong>PDF Generation</strong></td><td>@react-pdf/renderer, jsPDF, html2canvas</td></tr>
+        <tr><td><strong>Face Recognition</strong></td><td>face-api.js + react-webcam</td></tr>
+        <tr><td><strong>Authentication</strong></td><td>JWT (jwt-decode)</td></tr>
+        <tr><td><strong>Linting</strong></td><td>ESLint 9</td></tr>
+      </tbody>
+    </table>
+
+    <hr>
+
+    <h2 id="project-structure">Project Structure</h2>
+    <pre><code>NextHire/
+├── public/                     # Static assets
+├── src/
+│   ├── assets/                 # Images, logos, and media files
+│   ├── Components/
+│   │   ├── About/              # About page
+│   │   ├── AllJobs/            # Job listings page
+│   │   ├── CareerRoadmap/      # AI Career Roadmap Generator
+│   │   ├── CompanyPage/        # Employer dashboard
+│   │   ├── CoverLetterArchitect/ # AI Cover Letter Generator
+│   │   ├── CVBuilder/          # AI CV Builder with PDF export
+│   │   ├── EmployeePage/       # Employee dashboard
+│   │   ├── ErrorBoundary/      # React error boundary
+│   │   ├── Footer/             # Global footer
+│   │   ├── Header/             # Navigation header
+│   │   ├── Home/               # Landing page
+│   │   ├── Industry/           # Industry management
+│   │   ├── InternetSpeed/      # Internet speed checker
+│   │   ├── JobDetails/         # Job detail view
+│   │   ├── Login/              # Login with face recognition
+│   │   ├── MockInterview/      # AI Mock Interview (MCQ)
+│   │   ├── NotFound/           # 404 page
+│   │   ├── OfferWeightCalculator/ # AI Offer Comparison Tool
+│   │   ├── PersonalBrandingAssistant/ # AI Branding Assistant
+│   │   ├── PivotPredictor/     # AI Career Pivot Predictor
+│   │   ├── ProtectedRoute/     # Route guard component
+│   │   ├── RegisterCompany/    # Company registration
+│   │   ├── RegisterEmployee/   # Employee registration
+│   │   ├── RegisterState/      # Registration type selector
+│   │   ├── ResumeMatcher/      # AI Resume-Job Matcher
+│   │   ├── Trendings/          # Trending jobs component
+│   │   └── UserContext/        # Global user state (Context API)
+│   ├── App.jsx                 # Root component with routing
+│   └── App.css                 # Global styles
+├── index.html                  # Entry HTML
+├── vite.config.js              # Vite configuration
+├── package.json                # Dependencies &amp; scripts
+└── eslint.config.js            # ESLint configuration</code></pre>
+
+    <hr>
+
+    <h2 id="getting-started">Getting Started</h2>
+    <h3>Prerequisites</h3>
+    <ul>
+      <li><strong>Node.js</strong> v18+ recommended</li>
+      <li><strong>npm</strong> v9+</li>
+    </ul>
+    <h3>Installation</h3>
+    <pre><code># 1. Clone the repository
+git clone https://github.com/mohamed999x/Next_Hire.git
+
+# 2. Navigate to the project directory
+cd Next_Hire
+
+# 3. Install dependencies
+npm install
+
+# 4. Start the development server
+npm run dev</code></pre>
+    <p>The app will be available at <code>http://localhost:5173</code> by default.</p>
+
+    <hr>
+
+    <h2 id="available-scripts">Available Scripts</h2>
+    <table>
+      <thead><tr><th>Command</th><th>Description</th></tr></thead>
+      <tbody>
+        <tr><td><code>npm run dev</code></td><td>Start development server with hot reload</td></tr>
+        <tr><td><code>npm run build</code></td><td>Build for production</td></tr>
+        <tr><td><code>npm run preview</code></td><td>Preview the production build locally</td></tr>
+        <tr><td><code>npm run lint</code></td><td>Run ESLint to check code quality</td></tr>
+      </tbody>
+    </table>
+
+    <hr>
+
+    <h2 id="feature-details">Feature Details</h2>
+
+    <h3>1. 📝 AI CV Builder</h3>
+    <p>Build professional CVs with a comprehensive form that includes:</p>
+    <ul>
+      <li>Personal information (name, email, phone, LinkedIn, GitHub)</li>
+      <li>Work experience, education, and skills</li>
+      <li>Profile photo and certificate image uploads</li>
+      <li><strong>Real-time CV Score</strong> — calculates completeness percentage with suggestions</li>
+      <li><strong>PDF Export</strong> — download your CV as a professionally formatted PDF using <code>@react-pdf/renderer</code></li>
+    </ul>
+
+    <h3>2. 🎯 AI Mock Interview Simulator</h3>
+    <p>Practice interviews with multiple-choice questions (MCQ):</p>
+    <ul>
+      <li><strong>3 Categories</strong>: Frontend, Backend, and HR</li>
+      <li>Immediate feedback on correct/incorrect answers</li>
+      <li>Final score calculation with percentage</li>
+      <li>Timed question flow with next/submit controls</li>
+    </ul>
+
+    <h3>3. 🗺️ AI Career Roadmap Generator</h3>
+    <ul>
+      <li>Enter your dream job title (e.g., "Frontend Developer")</li>
+      <li>AI generates a <strong>5-step visual timeline roadmap</strong> with icons</li>
+      <li>Supports Frontend, Backend, and Full Stack paths</li>
+      <li>Generative fallback for custom career goals</li>
+    </ul>
+
+    <h3>4. 📊 AI Resume Matcher</h3>
+    <ul>
+      <li>Paste a <strong>job description</strong> and your <strong>resume text</strong></li>
+      <li>Calculates a <strong>match percentage</strong> based on skill detection</li>
+      <li>Shows <strong>matched skills</strong> ✅ and <strong>missing skills</strong> ❌</li>
+      <li>Provides <strong>learning resources</strong> with direct links for missing skills</li>
+      <li>Suggests <strong>project ideas</strong> to build missing skills</li>
+    </ul>
+
+    <h3>5. ✉️ AI Cover Letter Architect</h3>
+    <ul>
+      <li>Generates a professional cover letter from your skills and job description</li>
+      <li><strong>Typing animation</strong> effect for realistic letter generation</li>
+      <li>Extracts job title, company name, and projected skills automatically</li>
+      <li>One-click <strong>copy to clipboard</strong></li>
+    </ul>
+
+    <h3>6. 🏷️ AI Personal Branding Assistant</h3>
+    <ul>
+      <li>Input your current headline or bio</li>
+      <li>Get <strong>3 optimized versions</strong>: Professional, Creative, and Minimalist</li>
+      <li>Role and skill auto-detection from input text</li>
+      <li>Copy any suggestion directly to clipboard</li>
+    </ul>
+
+    <h3>7. 🔮 AI Pivot Predictor</h3>
+    <ul>
+      <li>Enter your current job role and years of experience</li>
+      <li>Get <strong>automation risk assessment</strong> (Low / Medium / High)</li>
+      <li>Discover <strong>emerging alternative roles</strong> with growth percentages</li>
+      <li>Receive <strong>upskilling recommendations</strong> with links</li>
+    </ul>
+
+    <h3>8. ⚖️ AI Offer-Weight Calculator</h3>
+    <ul>
+      <li>Compare <strong>two job offers</strong> side-by-side</li>
+      <li>Rate each on: Salary, Growth, Culture, Benefits, Work-Life Balance</li>
+      <li>Custom weight sliders for personal priorities</li>
+      <li>Visual <strong>weighted score comparison</strong> with a clear winner</li>
+    </ul>
+
+    <h3>9. 🌐 Internet Speed Checker</h3>
+    <ul>
+      <li>Download-speed test using image loading technique</li>
+      <li>Animated speed counter display in Mbps</li>
+      <li>Retest capability</li>
+    </ul>
+
+    <hr>
+
+    <h2 id="routing">Routing & Navigation</h2>
+    <table>
+      <thead><tr><th>Path</th><th>Component</th><th>Protected</th></tr></thead>
+      <tbody>
+        <tr><td><code>/</code></td><td>Home</td><td>❌</td></tr>
+        <tr><td><code>/about</code></td><td>About</td><td>❌</td></tr>
+        <tr><td><code>/login</code></td><td>Login</td><td>❌</td></tr>
+        <tr><td><code>/register</code></td><td>RegisterState</td><td>❌</td></tr>
+        <tr><td><code>/registeremployee</code></td><td>RegisterEmployee</td><td>❌</td></tr>
+        <tr><td><code>/registeremployer</code></td><td>RegisterCompany</td><td>❌</td></tr>
+        <tr><td><code>/industry</code></td><td>Industry</td><td>❌</td></tr>
+        <tr><td><code>/alljobs</code></td><td>AllJobs</td><td>✅</td></tr>
+        <tr><td><code>/jobdetails</code></td><td>JobDetails</td><td>✅</td></tr>
+        <tr><td><code>/companypage</code></td><td>CompanyPage</td><td>❌</td></tr>
+        <tr><td><code>/employeepage</code></td><td>EmployeePage</td><td>❌</td></tr>
+        <tr><td><code>/cvbuilder</code></td><td>CVBuilder</td><td>✅</td></tr>
+        <tr><td><code>/mock-interview</code></td><td>MockInterview</td><td>✅</td></tr>
+        <tr><td><code>/career-roadmap</code></td><td>CareerRoadmap</td><td>✅</td></tr>
+        <tr><td><code>/resume-matcher</code></td><td>ResumeMatcher</td><td>✅</td></tr>
+        <tr><td><code>/cover-letter</code></td><td>CoverLetterArchitect</td><td>✅</td></tr>
+        <tr><td><code>/branding-assistant</code></td><td>PersonalBrandingAssistant</td><td>✅</td></tr>
+        <tr><td><code>/pivot-predictor</code></td><td>PivotPredictor</td><td>✅</td></tr>
+        <tr><td><code>/offer-calculator</code></td><td>OfferWeightCalculator</td><td>✅</td></tr>
+        <tr><td><code>/internetspeed</code></td><td>InternetSpeedChecker</td><td>✅</td></tr>
+        <tr><td><code>/*</code></td><td>NotFound (404)</td><td>❌</td></tr>
+      </tbody>
+    </table>
+    <blockquote><p>✅ = Requires authentication via <code>ProtectedRoute</code></p></blockquote>
+
+    <hr>
+
+    <h2 id="auth">Authentication & Security</h2>
+    <ul>
+      <li><strong>JWT-based authentication</strong> — tokens decoded via <code>jwt-decode</code></li>
+      <li><strong>Face Recognition Login</strong> — optional biometric verification using <code>face-api.js</code> with webcam</li>
+      <li><strong>Protected Routes</strong> — AI tools and job features require authentication</li>
+      <li><strong>User Context</strong> — global state management via React Context API</li>
+      <li><strong>Form Validation</strong> — all forms validated with Formik + Yup schemas</li>
+    </ul>
+
+    <hr>
+
+    <h2 id="author">Author</h2>
+    <p><strong>Mohamed AbdElhameed</strong></p>
+    <ul>
+      <li>GitHub: <a href="https://github.com/mohamed999x">@mohamed999x</a></li>
+      <li>Project: <a href="https://github.com/mohamed999x/Next_Hire">Next_Hire</a></li>
+    </ul>
+
+    <hr>
+    <p align="center">Made with ❤️ by Mohamed AbdElhameed</p>
+  </div>
+</body>
+</html>
